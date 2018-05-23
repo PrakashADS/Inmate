@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" > -->
+<suite name="InmateProj" thread-count="2" parallel="classes" >
+  
+  <test name="ChromebrowserTest1">
+   <parameter name="browser" value="CH" />
+    <classes>
+     <class name="com.inmate.publicdefender.Run_PublicDefenderAdmin" />
+    </classes>
+  </test>   
+   <test name="ietest1">
+       <parameter name="browser" value="IE" />
+    <classes>
+      <class name="com.inmate.Kiosk.Run_Kiosk" />
+    </classes>
+  </test>  
+ </suite>  

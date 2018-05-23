@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="4" name="TestCasessuite" parallel="tests">
+  <test name="TestCase" junit="true" preserve-order="false">
+    <classes>
+      <class name="com.inmate.publicdefender.Run_PublicDefender_Admin"/>
+    </classes>
+  </test>
+</suite>
