@@ -62,25 +62,21 @@ int randomInt;
 private static final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 private static final int RANDOM_STRING_LENGTH = 6;
  
-public PublicDefender(WebDriver driver)
-{
-	this.obj=obj;
-}
-public WebDriver getDriver()
-{
-	return this.obj;
-}
-
 @When("^Enter username and password to LogIn$")
 public void LoginPage(DataTable login) throws InterruptedException
 {
 	List<List<String>> login1=login.raw();
 	POM_PubDefender pu=new POM_PubDefender(obj);
-	pu.btnLogin.click();
+	
+	Thread.sleep(1000);
+	pu.txtUsername.clear();	
 	pu.txtUsername.sendKeys(login1.get(0).get(1));
-	pu.btnLogin.click();
+	pu.txtPassword.clear();
 	pu.txtPassword.sendKeys(login1.get(1).get(1));
+	Thread.sleep(1000);
 	pu.btnLogin.click();
+
+	
 	log.info("LoggedIn Success");
 	
 }
@@ -185,7 +181,7 @@ public void LoginPage(DataTable login) throws InterruptedException
 						pdforms1.get(i).click();
 						Thread.sleep(1000);
 						Select pubdef=new Select(pu.SelectPubdefender);
-						pubdef.selectByVisibleText(req1.get(8).get(1));
+						pubdef.selectByValue(req1.get(8).get(1));
 						pu.AssignPD.click();
 						Thread.sleep(1000);
 						YesNo1();
@@ -363,7 +359,7 @@ public void SendReply(DataTable NewMesg) throws InterruptedException
 			 Thread.sleep(2000);
 			 MsgToInmate1=obj.findElements(By.xpath("//a[contains(text(),'Message To Inmate 1')]"));
 			 Thread.sleep(2000);
-			 MsgToInmate1.get(1).click();
+			 MsgToInmate1.get(0).click();
 			 Thread.sleep(2000);
 			 char ReplyMode='A';
 				switch(ReplyMode)
@@ -1307,7 +1303,7 @@ public void publicUsers(DataTable pubusers) throws InterruptedException, AWTExce
 		pu.btnOk.click();
 		Thread.sleep(1000);
 	}	
-	//	pu.Connections_InmateId();
+		pu.Connections_InmateId();
 	//	pu.Connections_InmateName();
 		
 	//	pu.Connections_InmateStatus();
@@ -1372,13 +1368,15 @@ public void publicUserMessages(DataTable PubMesg) throws InterruptedException, A
 	pu.BtnTranslate.click();
 	Thread.sleep(1500);
 	pu.Back.click();
-	 //      ScrollUp250();
-	//   pu.PublicUser_Message_Subj_Sort();
-	//	  pu.PublicUser_Message_From_Sort();
-	//	  pu.PublicUser_Message_To_Sort();
-	//    pu.PublicUser_Message_Flag_Sort();
-	//    pu.PublicUser_Message_SentOn_Sort();
-	//       pu.PublicUser_Message_Status_Sort();
+	       ScrollUp250();
+	       
+	       pu.Message_Sorting();
+	    /*  pu.PublicUser_Message_Subj_Sort();
+		  pu.PublicUser_Message_From_Sort();
+		  pu.PublicUser_Message_To_Sort();
+	     pu.PublicUser_Message_Flag_Sort();
+	      pu.PublicUser_Message_SentOn_Sort();
+	       pu.PublicUser_Message_Status_Sort();*/
 	
 }
 @And("^Click public user Photos$")
@@ -1461,11 +1459,12 @@ public void pubUserPhotos(DataTable PubPhotos) throws InterruptedException, AWTE
 	
 	Thread.sleep(1000);
 	ScrollUp250();
-//	pu.PublicUser_Photos_Subject_Sort();
-//	pu.PublicUser_Photos_From_Sort();
-//	pu.PublicUser_Photos_To_Sort();
-//	pu.PublicUser_Photos_SentOn_Sort();
-	pu.PublicUser_Photos_Status_Sort();
+	
+	/*pu.PublicUser_Photos_Subject_Sort();
+	pu.PublicUser_Photos_From_Sort();
+	pu.PublicUser_Photos_To_Sort();
+	pu.PublicUser_Photos_SentOn_Sort();
+	pu.PublicUser_Photos_Status_Sort();*/
 	
 }
 @Then("^Goto PublicUser and Sort$") 
@@ -1986,39 +1985,40 @@ public void create_Msg(DataTable NewMesg) throws InterruptedException, AWTExcept
  @Then("^Sort the f1$")
  public void SortReqSearch(DataTable Sortf1) throws InterruptedException, AWTException
  {
-	 POM_PubDefender pu=new POM_PubDefender(obj);
-	 Thread.sleep(1500);
-	 List<List<String>> Sortingf1=Sortf1.raw();
-	 Thread.sleep(1000);
-	 pu.ReqGrievances.click();
-	 Thread.sleep(1000);
-	 Select type1=new Select(pu.FacilityType);
-	 type1.selectByVisibleText(Sortingf1.get(0).get(1)); 
-	 Thread.sleep(1500);
-	 Select status1=new Select(pu.FacilityStatus);
-	 status1.selectByVisibleText(Sortingf1.get(1).get(1));
-	 Thread.sleep(1000);
-	 /* pu.ReqStartDate.sendKeys(Sortingf1.get(2).get(1));
-	 pu.ReqEndDate.sendKeys(Sortingf1.get(3).get(1));
-	 Thread.sleep(1000);
-	 pu.RespStartDate.sendKeys(Sortingf1.get(4).get(1));
-	 pu.RespEndDate.sendKeys(Sortingf1.get(5).get(1));*/
-	 Thread.sleep(1000);
-	   /* pu.InmateLastName1.click();
-		pu.LastNameSearch.sendKeys(Sortingf1.get(6).get(1));
-		Robot rb=new Robot();
-		rb.keyPress(KeyEvent.VK_TAB);
-		Thread.sleep(2000);
-		pu.InmateFrstName1.click();
-		pu.FrstNameSearch.sendKeys(Sortingf1.get(7).get(1));*/
-		Robot rb1=new Robot();
+		POM_PubDefender pu = new POM_PubDefender(obj);
+		Thread.sleep(1500);
+		List<List<String>> Sortingf1 = Sortf1.raw();
+		Thread.sleep(1000);
+		pu.ReqGrievances.click();
+		Thread.sleep(1000);
+		Select type1 = new Select(pu.FacilityType);
+		type1.selectByVisibleText(Sortingf1.get(0).get(1));
+		Thread.sleep(1500);
+		Select status1 = new Select(pu.FacilityStatus);
+		status1.selectByVisibleText(Sortingf1.get(1).get(1));
+		Thread.sleep(1000);
+		/*
+		 * pu.ReqStartDate.sendKeys(Sortingf1.get(2).get(1));
+		 * pu.ReqEndDate.sendKeys(Sortingf1.get(3).get(1)); Thread.sleep(1000);
+		 * pu.RespStartDate.sendKeys(Sortingf1.get(4).get(1));
+		 * pu.RespEndDate.sendKeys(Sortingf1.get(5).get(1));
+		 */
+		Thread.sleep(1000);
+		/*
+		 * pu.InmateLastName1.click();
+		 * pu.LastNameSearch.sendKeys(Sortingf1.get(6).get(1)); Robot rb=new
+		 * Robot(); rb.keyPress(KeyEvent.VK_TAB); Thread.sleep(2000);
+		 * pu.InmateFrstName1.click();
+		 * pu.FrstNameSearch.sendKeys(Sortingf1.get(7).get(1));
+		 */
+		Robot rb1 = new Robot();
 		rb1.keyPress(KeyEvent.VK_TAB);
 		Thread.sleep(1000);
-		Select pod=new Select(pu.pod);
+		Select pod = new Select(pu.pod);
 		pod.selectByVisibleText(Sortingf1.get(8).get(1));
 		Thread.sleep(1000);
-	    pu.SearchRequest.click();
-	    Thread.sleep(1000);
+		pu.SearchRequest.click();
+		Thread.sleep(1000);
 	    
 	 //   pu.f1_Form_Sort();
     //    pu.f1_Inmate_Sort();
@@ -2068,34 +2068,43 @@ public void create_Msg(DataTable NewMesg) throws InterruptedException, AWTExcept
 	// 	  pu.InitiateMsg_Created_Sort1();
 	//	  pu.InitiateMsg_Responded_Sort1();
      //	  pu.InitiateMsg_Status_Sort1();
-		
-		
+			
  }
  
  @Then("^Sort initiate message$")
  public void InitiateMsg_Sort(DataTable initmess) throws InterruptedException
  {
-	 List<List<String>> inmes=initmess.raw();
-	 POM_PubDefender pu=new POM_PubDefender(obj);
-	 Thread.sleep(1000);
-	 pu.GrievancesBtn.click();
-	 Thread.sleep(1000);
-	 pu.initiateMsg.click();
-	 Thread.sleep(1000);
-	 Select rtypes=new Select(pu.ReqType);
+		List<List<String>> inmes = initmess.raw();
+		POM_PubDefender pu = new POM_PubDefender(obj);
+		Thread.sleep(1000);
+		pu.GrievancesBtn.click();
+		Thread.sleep(1000);
+		pu.initiateMsg.click();
+		Thread.sleep(1000);
+		Select rtypes = new Select(pu.ReqType);
 		rtypes.selectByVisibleText(inmes.get(0).get(1));
-		Select rstatus=new Select(pu.ReqStatus);
+		Select rstatus = new Select(pu.ReqStatus);
 		rstatus.selectByVisibleText(inmes.get(1).get(1));
 		Thread.sleep(1000);
 		pu.SearchRequest.click();
-		
+		Thread.sleep(1000);
+		pu.Sorting();
+		   /* pu.Initiatemessage_Form();
 		    pu.Initiatemessage_Form();
-		//    pu.Initiatemessage_InitiatedBy();
-		//    pu.Initiatemessage_Inmate();
-		// 	  pu.Initiatemessage_Created();
-		//	  pu.Initiatemessage_Responded();
+		    
+		    pu.Initiatemessage_InitiatedBy();
+		    pu.Initiatemessage_InitiatedBy();
+		    
+		    pu.Initiatemessage_Inmate();
+		    pu.Initiatemessage_Inmate();
+		    
+		 	  pu.Initiatemessage_Created();
+		 	 pu.Initiatemessage_Created();
+		 	 
+			  pu.Initiatemessage_Responded();
+			  pu.Initiatemessage_Responded();*/
 		//	  pu.Initiatemessage_Status();
-			
+		//	pu.Pagination();
  }
  
  @BeforeMethod
@@ -2115,15 +2124,16 @@ public void create_Msg(DataTable NewMesg) throws InterruptedException, AWTExcept
     		  break;
     		  
 	  }*/
-	   System.setProperty("webdriver.chrome.driver", "D:\\PRAKASH DOCS\\PRAKASH_Softwares\\chromedriver.exe");  
-		  obj=new ChromeDriver();
-	  
-	       obj.get("http://inmatecr01.sgssys.info/facilityuser");
-		//   obj.get("http://inmatecr01.sgssys.info/");
-	  	  obj.manage().window().maximize();
-	  	  obj.manage().logs().getClass();
-	  	  obj.manage().timeouts().pageLoadTimeout(3000, TimeUnit.SECONDS); 
-	 
+		System.setProperty("webdriver.chrome.driver",
+				"D:\\PRAKASH DOCS\\PRAKASH_Softwares\\chromedriver.exe");
+		obj = new ChromeDriver();
+
+		obj.get("http://inmatecr01.sgssys.info/facilityuser");
+		// obj.get("http://inmatecr01.sgssys.info/");
+		obj.manage().window().maximize();
+		obj.manage().logs().getClass();
+		obj.manage().timeouts().pageLoadTimeout(3000, TimeUnit.SECONDS);
+
 	  }
 /* @BeforeMethod
  @Given("^Enter the Inmate app URL$")
@@ -2193,8 +2203,7 @@ public void create_Msg(DataTable NewMesg) throws InterruptedException, AWTExcept
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}	
-			
+			}		
 	 } 
 	 public void replyModePdf() throws InterruptedException
 	 {
@@ -2389,3 +2398,4 @@ private int getRandomNumber() {
     }
 }
 }
+//John PETER A - fac2411

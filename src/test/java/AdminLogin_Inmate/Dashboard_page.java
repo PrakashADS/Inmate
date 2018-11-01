@@ -45,7 +45,7 @@ public class Dashboard_page {
 		Thread.sleep(6000);
 		driver.findElement(btn_popup).click();
 		logger.info("Ok Popup clicked successfully");
-		Thread.sleep(1000);
+		Thread.sleep(3000);
 		driver.findElement(btn_Report).click();
 		logger.info("Report button clicked successfully");		
 		Thread.sleep(2000);	

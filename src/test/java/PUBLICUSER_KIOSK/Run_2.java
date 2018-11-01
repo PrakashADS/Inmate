@@ -8,7 +8,7 @@ import cucumber.api.junit.Cucumber;
 
 @CucumberOptions(
 
-features="C:\\Users\\prakashd\\Prakash_Automation\\Inmate\\src\\test\\java\\com\\inmate\\publicdefender\\facilityAdmin.feature",
+features="D:\\Prakash_Automation\\Inmate\\src\\test\\java\\com\\inmate\\publicdefender\\facilityAdmin.feature",
     		 	      		
 			   plugin = {"pretty", "html:target/cucumber-html-report/ScreenshotFacilityAdmin2","json:cucumber.json"},
 	   tags={

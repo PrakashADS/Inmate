@@ -34,11 +34,11 @@ public class Keyword_Page {
 	By export_excel = By.id("ContentPlaceHolder1_imbtnExportToExcel");
 	By pagination = By.xpath("//*[@id='grvKeywords']/tbody/tr[12]/td/table/tbody/tr/td[2]/a");	
 	By btn_reset = By.id("ContentPlaceHolder1_btnReset");
-	By lnk_keyword = By.xpath("//*[@id='grvKeyword']/tbody/tr[1]/th[1]/a");	
-	By lnk_web_user_action = By.xpath("//*[@id='grvKeywords']/tbody/tr[1]/th[2]/a");
-	By lnk_inmate_action = By.xpath("//*[@id='grvKeywords']/tbody/tr[1]/th[3]/a");
-	By lnk_filter_type = By.xpath("//*[@id='grvKeywords']/tbody/tr[1]/th[4]/a");
-	By sort_status = By.xpath("//*[@id='grvKeywords']/tbody/tr[1]/th[5]/a");
+	By lnk_keyword = By.xpath("//*[@id='ContentPlaceHolder1_rptKeywords_lnkKeyword']");	
+	By lnk_web_user_action = By.xpath("//*[@id='ContentPlaceHolder1_rptKeywords_lnkWebUserAction']");
+	By lnk_inmate_action = By.xpath("//*[@id='ContentPlaceHolder1_rptKeywords_lnkInmateAction']");
+	By lnk_filter_type = By.xpath("//*[@id='ContentPlaceHolder1_rptKeywords_lnkFilterType']");
+	By sort_status = By.xpath("//*[@id='ContentPlaceHolder1_rptKeywords_lnkStatus']");
 	By sorting_keyword = By.id("lnkMessageKeywordID");
 	By sorting_webuseraction = By.id("lblWebUserAction");
 	By sorting_inmate_action = By.id("lblInmateAction");
@@ -96,6 +96,7 @@ public class Keyword_Page {
 			
 			Thread.sleep(3000);
 			driver.findElement(menu_keyword).click();
+			Thread.sleep(1500);
 			Select sel = new Select(driver.findElement(By.id("ddlFacilityCodes")));
 			sel.selectByValue("105");
 			Thread.sleep(1000);
@@ -103,10 +104,19 @@ public class Keyword_Page {
 			srchinmate.selectByValue("1");
 			Log.info("Inmate Action Dropdown has been chosen");			
 			driver.findElement(btn_search).click();
+			int i=0;
+			
 			Thread.sleep(1000);
-			List<WebElement> list = driver.findElements(list_edit);			
-			list.get(0).click();			
+			List<WebElement> list = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptKeywords_lnkMessageKeywordID_0']"));
+			for(int j=0;i<1;i++)
+			{
+			Thread.sleep(1000);
+			list = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptKeywords_lnkMessageKeywordID_"+i+"']"));
+			Thread.sleep(1000);
+			list.get(j).click();			
+			}
 			Log.info("Edit inmate has been chosen");
+			Thread.sleep(1000);
 			driver.findElement(txt_keyword).clear();
 			driver.findElement(txt_keyword).sendKeys("Inmate"+RandomNumberChars( ));
 			Log.info("Keyword has been edited");
@@ -148,9 +158,8 @@ public class Keyword_Page {
 		driver.findElement(menu_keyword).click();
 		Select sel = new Select(driver.findElement(By.id("ddlFacilityCodes")));
 		sel.selectByValue("105");
-		Thread.sleep(1000);
-		
-		/*driver.findElement(lnk_keyword).click();
+		Thread.sleep(2000);
+		driver.findElement(lnk_keyword).click();
 		System.out.println("Before Sorting");
 		System.out.println("*************");
 		Thread.sleep(1000);
@@ -159,7 +168,7 @@ public class Keyword_Page {
 		System.out.println("*************");
 		driver.findElement(lnk_keyword).click();
 		Thread.sleep(1000);
-		sort_keyword();*/
+		sort_keyword();
 
 		driver.findElement(lnk_web_user_action).click();
 		System.out.println("Before Sorting");
@@ -193,34 +202,104 @@ public class Keyword_Page {
 		driver.findElement(lnk_filter_type).click();
 		Thread.sleep(1000);
 		sort_filter_type();
+		
+
+		driver.findElement(sort_status).click();
+		System.out.println("Before Sorting");
+		System.out.println("*************");
+		Thread.sleep(1000);
+		sort_status();
+		System.out.println("After Sorting");
+		System.out.println("*************");
+		driver.findElement(sort_status).click();
+		Thread.sleep(1000);
+		sort_status();
+		
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imbtnExportToExcel']")).click();
 	}
 	
 	public void sort_keyword(){
-		List<WebElement> li = driver.findElements(sorting_keyword);
+		for(int i=0;i<10;i++)
+		{
+		List<WebElement> li = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptKeywords_lnkMessageKeywordID_"+i+"']"));
 		for (WebElement e : li) {
 			System.out.println(e.getText());
+		}
 		}
 	}
 
 	public void sort_web_user_action(){
-		List<WebElement> li = driver.findElements(sorting_webuseraction);
+		for(int i=0;i<10;i++)
+		{
+		List<WebElement> li = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptKeywords_lblWebUserAction_"+i+"']"));
 		for (WebElement e : li) {
 			System.out.println(e.getText());
+		}
 		}
 	}
 
 	public void sort_inmate_to(){
-		List<WebElement> li = driver.findElements(sorting_inmate_action);
+		for(int i=0;i<10;i++)
+		{
+		List<WebElement> li = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptKeywords_lblInmateAction_"+i+"']"));
 		for (WebElement e : li) {
 			System.out.println(e.getText());
+		}
 		}
 	}
-
+	public void sort_status(){
+		for(int i=0;i<10;i++)
+		{
+		List<WebElement> li = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptKeywords_imgStatus_"+i+"']"));
+		for (WebElement e : li) {
+			System.out.println(e.getAttribute("title"));
+		}
+		}
+	}
 	public void sort_filter_type(){
-		List<WebElement> li = driver.findElements(sorting_filter_type);
+		for(int i=0;i<10;i++)
+		{
+		List<WebElement> li = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptKeywords_lblKeywordFilterType_"+i+"']"));
 		for (WebElement e : li) {
 			System.out.println(e.getText());
 		}
+		}
+	}
+	public void Scroll250()
+	{
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		jse.executeScript("window.scrollBy(0,250)", "");
+	}
+	public void Pagination() throws InterruptedException
+	{  
+		Next();
+		Prev();
+	}
+	public void Next() throws InterruptedException
+	{
+		List<WebElement> pagination =driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnNext']")); 
+		if(pagination.size()>0){ 
+		System.out.println("pagination exists"); 
+		for(int i=0; i<2; i++){ 
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnNext']")).click();	
+		} 
+		} else { 
+		System.out.println("pagination not exists"); 
+		}
+	}
+	public void Prev() throws InterruptedException
+	{List<WebElement> pagination =driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnPrevious']")); 
+	if(pagination.size()>0){ 
+	System.out.println("pagination exists"); 
+	for(int i=0; i<2; i++){ 
+	Thread.sleep(1000);
+	driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnPrevious']")).click();	
+	} 
+	} else { 
+	System.out.println("pagination not exists"); 
+	}	
 	}
 	public String RandomNumberChars()
 	{

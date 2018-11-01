@@ -36,7 +36,7 @@ public class Publicuser_Page {
 	By dwn_Category = By.id("ContentPlaceHolder1_ddlChoose");
 	By chk_connection = By.id("chkSelectPublicUsers");
 	By txtarea_notes = By.id("ContentPlaceHolder1_txtNotes");
-	By btn_block = By.id("btnUpdatePublicUser");
+	By btn_update = By.xpath("//*[@id='btnSubmit']");
 	By dwn_inmate_id = By.name("ctl00$ContentPlaceHolder1$ddlLoadInmates");
 	By txt_complementary_fund = By.id("ContentPlaceHolder1_txtCredits");
 	By btn_submit = By.id("btnFundSubmit");
@@ -85,9 +85,15 @@ public class Publicuser_Page {
 	By FromDate = By.id("ContentPlaceHolder1_txtReportFromDate");
 	By ToDate = By.id("ContentPlaceHolder1_txtReportToDate");
 	By Direction = By.id("ContentPlaceHolder1_ddlReportMessageDirection");
+    By Notes=By.xpath("//*[@id='ContentPlaceHolder1_txtNotes']");
+    By category=By.xpath("//*[@id='ContentPlaceHolder1_ddlChoose']");
+    By inmateId=By.xpath("//*[@id='ContentPlaceHolder1_ddlLoadInmates']");
+    By CompFunds=By.xpath("//*[@id='ContentPlaceHolder1_txtCredits']");
+    By submit=By.xpath("//*[@id='btnFundSubmit']");
+    
+    
+	public void publicuser_edit(DataTable puReport) throws Exception {
 
-	public void publicuser_edit(DataTable puReport) {
-		try {
 
 			Logger Log = Logger.getLogger("Login_Page");
 			PropertyConfigurator.configure("log4j.properties");
@@ -103,53 +109,55 @@ public class Publicuser_Page {
 			Log.info("Username has been entered");
 			driver.findElement(btn_search).click();
 			Log.info("Search button has clicked");
-			Thread.sleep(2000);
-			List<WebElement> list = driver.findElements(lnk_username);
-			list.get(2).click();
+		    Thread.sleep(1500);
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPublicUsers_lblUserName_2']")).click();
+			
 			Log.info("Username has been clicked");
 			Thread.sleep(1000);
-			/*
-			 * Select s1 = new Select(driver.findElement(dwn_Category));
-			 * s1.selectByValue("Complementary Fund");
-			 * Log.info("Category has been clicked"); Thread.sleep(2000); Select
-			 * s2 = new Select(driver.findElement(dwn_inmate_id));
-			 * s2.selectByIndex(1); Log.info("Inmate Id has been clicked");
-			 * Thread.sleep(1000);
-			 * driver.findElement(txt_complementary_fund).sendKeys("5");
-			 * Log.info("Complementary fund added successfully");
-			 * Thread.sleep(1000); driver.findElement(btn_submit).click();
-			 * Log.info("Submit button has been clicked"); Thread.sleep(1000);
-			 * driver.findElement(btn_ok).click();
-			 * Log.info("Ok button has been clicked");
-			 */
+			
 			Thread.sleep(1000);
 			scroll();
-			List<WebElement> chkbox = driver.findElements(chk_connection);
+			/*Thread.sleep(1000);
+			List<WebElement> chkbox = driver.findElements(By.xpath("//*[@id='chkSelectPublicUsers']"));
 			int isize = chkbox.size();
 			// System.out.println("Total Size of checkbox"+isize);
-			for (int i = 1; i < isize; i++) {
-				chkbox = driver.findElements(chk_connection);
+			for (int j = 0; j < isize; j++) {
+				chkbox = driver.findElements(By.xpath("//*[@id='chkSelectPublicUsers']"));
+				Thread.sleep(1000);
 				chkbox.get(0).click();
-			}
-			chkbox.get(0).click();
+			}*/
+			
 			Log.info("Inmate id has been clicked");
-			driver.findElement(btn_block).click();
-			Log.info("Block button clicked");
+			Thread.sleep(1000);
+		    driver.findElement(Notes).clear();
+		    driver.findElement(Notes).sendKeys("Test Notessss");
+		    Thread.sleep(2000);
+			driver.findElement(btn_update).click();
+			Log.info("Update button clicked");
 			Thread.sleep(1000);
 			driver.findElement(btn_ok).click();
 			Log.info("Ok button has been clicked");
-			Thread.sleep(1000);
-			// driver.findElement(export_excel_connection).click();
+			
+		    FundingProcess();
+		  
+			Thread.sleep(1500);
+			 driver.findElement(export_excel_connection).click();
 			Log.info("Export to Excel_Connections has been clicked");
-
-			Log.info("******Before Inmate ID Sorting*****");
+            Thread.sleep(1000);
+            scroll450();
+            Thread.sleep(1000);
+			Sorting_Connections();
+			Thread.sleep(1000);
+			Block();
+			Thread.sleep(1000);
 			scroll();
-
+			Thread.sleep(1000);
+			Login_Information();
 			POM_PubDefender pu = new POM_PubDefender(driver);
 			Thread.sleep(2000);
-			// pu.PublicUsers.click();
-			scroll1();
-			Thread.sleep(1500);
+		   // pu.PublicUsers.click();
+			scroll2000();
+			Thread.sleep(2500);
 			pu.PubUserMessage.click();
 			Thread.sleep(2000);
 			pu.InmateLastNameSearch.click();
@@ -168,176 +176,134 @@ public class Publicuser_Page {
 			Thread.sleep(2000);
 			pu.SearchMsg.click();
 			Thread.sleep(1000);
-			/*
-			 * log.info("public user message searched Success");
-			 * List<WebElement>
-			 * InmateMessage=obj.findElements(By.id("lblMessageSubject"));
-			 * Thread.sleep(1000); for(int i=0;i<1;i++) { Thread.sleep(1000);
-			 * InmateMessage=obj.findElements(By.id("lblMessageSubject"));
-			 * Thread.sleep(1000); InmateMessage.get(i).click();
-			 * Thread.sleep(1000); pu.BtnTranslate.click(); Thread.sleep(1000);
-			 * pu.BackButton.click(); Thread.sleep(1000); }
-			 */
 			Thread.sleep(1500);
-			driver.findElement(
-					By.xpath("//*[@id='ContentPlaceHolder1_rptMessages_lblSubject_0']"))
-					.click();
+			driver.findElement(	By.xpath("//*[@id='ContentPlaceHolder1_rptMessages_lblSubject_0']")).click();
 			Thread.sleep(1500);
 			pu.BtnTranslate.click();
 			Thread.sleep(1500);
 			pu.Back.click();
+			Thread.sleep(1000);
+			scroll450();
+			Thread.sleep(1000);
+			pu.Message_Sorting();
 
-			/*
-			 * Thread.sleep(2000);
-			 * driver.findElement(connection_pagination).click();
-			 * webdriverWait(sort_inmate_id,50); Thread.sleep(2000);
-			 * driver.findElement(sort_inmate_id).click();
-			 * webdriverWait(sort_inmate_id,50); Sorting_Inmate_ID();
-			 * //scroll(); Thread.sleep(2000); webdriverWait(sort_inmate_id,50);
-			 * Thread.sleep(3000); driver.findElement(sort_inmate_id).click();
-			 * Log.info("***After Inmate ID Sorting***"); Thread.sleep(1000);
-			 * Sorting_Inmate_ID(); Thread.sleep(1000);
-			 * Pub_User_reports(puReport);
-			 * Log.info("******Before Inmate Name Sorting*****"); //scroll();
-			 * Thread.sleep(2000);
-			 * //driver.findElement(connection_pagination).click();
-			 * webdriverWait(sort_inmate_name,50); Thread.sleep(1000);
-			 * driver.findElement(sort_inmate_name).click();
-			 * webdriverWait(sort_inmate_name,50); Sorting_Inmate_Name();
-			 * //scroll(); Thread.sleep(2000);
-			 * webdriverWait(sort_inmate_name,50); Thread.sleep(3000);
-			 * driver.findElement(sort_inmate_name).click();
-			 * Log.info("***After Inmate Name Sorting***"); Thread.sleep(1000);
-			 * Sorting_Inmate_Name();
-			 * 
-			 * 
-			 * Log.info("******Before Inmate Status Sorting*****");
-			 * Thread.sleep(2000); webdriverWait(sort_inmate_status,50);
-			 * Thread.sleep(1000);
-			 * driver.findElement(sort_inmate_status).click();
-			 * webdriverWait(sort_inmate_status,50); Sorting_Inmate_Status();
-			 * Thread.sleep(2000); webdriverWait(sort_inmate_status,50);
-			 * Thread.sleep(3000);
-			 * driver.findElement(sort_inmate_status).click();
-			 * Log.info("***After Inmate status Sorting***");
-			 * Thread.sleep(1000); Sorting_Inmate_Status();
-			 * 
-			 * 
-			 * Log.info("******Before Inmate Relationship Sorting*****");
-			 * Thread.sleep(2000); webdriverWait(sort_relationship,50);
-			 * Thread.sleep(1000);
-			 * driver.findElement(sort_relationship).click();
-			 * webdriverWait(sort_relationship,50);
-			 * Sorting_Inmate_Relationship(); Thread.sleep(2000);
-			 * webdriverWait(sort_relationship,50); Thread.sleep(3000);
-			 * driver.findElement(sort_relationship).click();
-			 * Log.info("***After Inmate Relationship Sorting***");
-			 * Thread.sleep(1000); Sorting_Inmate_Relationship();
-			 * 
-			 * 
-			 * Log.info("******Before Inmate Connection Status Sorting*****");
-			 * Thread.sleep(2000); webdriverWait(sort_connection_status,50);
-			 * Thread.sleep(1000);
-			 * driver.findElement(sort_connection_status).click();
-			 * webdriverWait(sort_connection_status,50);
-			 * Sorting_Inmate_Connection_Status();; Thread.sleep(2000);
-			 * webdriverWait(sort_connection_status,50); Thread.sleep(3000);
-			 * driver.findElement(sort_connection_status).click();
-			 * Log.info("***After Inmate Connection status Sorting***");
-			 * Thread.sleep(1000); Sorting_Inmate_Connection_Status();
-			 * 
-			 * 
-			 * Log.info("******Before Inmate Credit Balance Sorting*****");
-			 * Thread.sleep(2000); webdriverWait(sort_credit_balance,50);
-			 * Thread.sleep(1000);
-			 * driver.findElement(sort_credit_balance).click();
-			 * webdriverWait(sort_credit_balance,50);
-			 * Sorting_Inmate_Credit_Balance(); Thread.sleep(2000);
-			 * webdriverWait(sort_credit_balance,50); Thread.sleep(3000);
-			 * driver.findElement(sort_credit_balance).click();
-			 * Log.info("***After Inmate Credit Balance Sorting***");
-			 * Thread.sleep(1000); Sorting_Inmate_Credit_Balance();
-			 * 
-			 * scroll(); scroll(); Thread.sleep(1000);
-			 * driver.findElement(lnk_browser).click();
-			 * 
-			 * Log.info("******Before Browser Sorting*****");
-			 * Thread.sleep(2000); webdriverWait(lnk_browser,50);
-			 * Thread.sleep(1000); driver.findElement(lnk_browser).click();
-			 * webdriverWait(lnk_browser,50); Sorting_browser();
-			 * Thread.sleep(2000); webdriverWait(lnk_browser,50);
-			 * Thread.sleep(3000); driver.findElement(lnk_browser).click();
-			 * Log.info("***After Browser Sorting***"); Thread.sleep(1000);
-			 * Sorting_browser();
-			 * 
-			 * 
-			 * Log.info("******Before IPAddress Sorting*****");
-			 * Thread.sleep(2000); webdriverWait(lnk_ip_address,50);
-			 * Thread.sleep(1000); driver.findElement(lnk_ip_address).click();
-			 * webdriverWait(lnk_ip_address,50); Sorting_IpAdress();
-			 * Thread.sleep(2000); webdriverWait(lnk_ip_address,50);
-			 * Thread.sleep(3000); driver.findElement(lnk_ip_address).click();
-			 * Log.info("***After IPAddress Sorting***"); Thread.sleep(1000);
-			 * Sorting_IpAdress();
-			 * 
-			 * 
-			 * Log.info("******Before DateTime Sorting*****");
-			 * Thread.sleep(2000); webdriverWait(lnk_DateTime,50);
-			 * Thread.sleep(1000); driver.findElement(lnk_datetime).click();
-			 * webdriverWait(lnk_datetime,50); Sorting_Datetime();
-			 * Thread.sleep(2000); webdriverWait(lnk_datetime,50);
-			 * Thread.sleep(3000); driver.findElement(lnk_datetime).click();
-			 * Log.info("***After DateTime Sorting***"); Thread.sleep(1000);
-			 * Sorting_Datetime();
-			 */
-
-			/*
-			 * Thread.sleep(1000); scroll1(); webdriverWait(lnk_messages, 50);
-			 * Thread.sleep(1000); driver.findElement(lnk_messages).click();
-			 * Log.info("Messages tab has been clicked successfully");
-			 * Thread.sleep(1000); List<WebElement> l1 =
-			 * driver.findElements(msg_edit_sub); l1.get(1).click();
-			 * Thread.sleep(1000); driver.findElement(msg_translate).click();
-			 * Log.info("Translate button has been clicked successfully");
-			 * Thread.sleep(2000); driver.findElement(msg_back).click();
-			 * Log.info("Message Back button has been clicked successfully");
-			 * Thread.sleep(1000); driver.findElement(lnk_photos).click();
-			 * Log.info("Photos tab has been clicked successfully");
-			 * Thread.sleep(1000); List<WebElement> photos =
-			 * driver.findElements(photo_edit_sub); photos.get(1).click();
-			 * Thread.sleep(1000); driver.findElement(msg_back).click();
-			 * Log.info("Photos Back button has been clicked successfully");
-			 * driver.findElement(lnk_payments).click();
-			 * Log.info("Payment tab has been clicked successfully");
-			 * driver.findElement(btn_payment_back).click();
-			 * Log.info("Payment Back button has been clicked successfully");
-			 * Thread.sleep(1000);
-			 */
 	       	 PublicUser_photos();
 		
 			Thread.sleep(2000);
-			scroll200();
-			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_achrPayments']/i/span")).click();
+			Payments();
 				
 			Thread.sleep(1000);
 
 			Pub_User_reports(puReport);
-			/*
-			 * //driver.findElement(page_sort).click(); List<WebElement> list1 =
-			 * driver.findElements(By.id("lblInmateResidentId")); int totalelem
-			 * = list1.size(); String value = list1.toString();
-			 * value.getBytes(value); for(int i=0;i<=totalelem;i++){
-			 * 
-			 * System.out.println(list1.get(1)); }
-			 */
 
-			// driver.findElement(page_sort).click();
-
-		} catch (Exception e) {
-			e.printStackTrace();
+	}
+	public void Payments() throws InterruptedException
+			{
+		        Thread.sleep(1000);
+				scroll200();
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_achrPayments']/i/span")).click();
+				Thread.sleep(2000);
+				for(int i=0;i<3;i++)
+				{
+					Thread.sleep(1500);
+					driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnNextPay']")).click();
+				}
+				Thread.sleep(1500);
+				for(int i=0;i<3;i++)
+				{
+					Thread.sleep(1000);
+					driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnPrevious']")).click();
+				}
+			}
+	public void Login_Information() throws Exception
+	{
+		/*System.out.println("SignIn browser Type Ascending order");
+    	Thread.sleep(1000);
+   	    driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPublicUserLoginInfo_lnkSigninBrowserType']")).click();
+		Sorting_SignInBrowser();
+		System.out.println("SignIn browser Type Descending order");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPublicUserLoginInfo_lnkSigninBrowserType']")).click();
+		Thread.sleep(1000);
+		Sorting_SignInBrowser();
+		
+		System.out.println("SignIn IP Ascending order");
+    	Thread.sleep(1000);
+   	    driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPublicUserLoginInfo_lnkSigninIPAddress']")).click();
+   	    Sorting_SignInIpAddress();
+		System.out.println("SignIn IP Descending order");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPublicUserLoginInfo_lnkSigninIPAddress']")).click();
+		Thread.sleep(1000);
+		Sorting_SignInIpAddress();*/
+		
+		System.out.println("SiginIn on Ascending order");
+    	Thread.sleep(1000);
+   	    driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPublicUserLoginInfo_lnkSigninOn']")).click();
+   	    Sorting_SigninOn();
+		System.out.println("Inmate ID Descending order");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPublicUserLoginInfo_lnkSigninOn']")).click();
+		Thread.sleep(1000);
+		Sorting_SigninOn();
+		
+		Thread.sleep(1000);
+		Pagination();
+	}
+	public void Pagination() throws InterruptedException
+	{
+		Thread.sleep(1000);
+		for(int i=0;i<4;i++)
+		{
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnPULoginInfoNext']")).click();
+		}
+		Thread.sleep(1000);
+		for(int i=0;i<4;i++)
+		{
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnPULoginInfoPrev']")).click();
 		}
 	}
-
+	public void Block() throws InterruptedException
+	{
+		Thread.sleep(1000);
+		List<WebElement> chk=driver.findElements(By.id("chkSelectPublicUsers"));
+		for(int i=0;i<1;i++)
+		{
+			Thread.sleep(1000);
+			chk=driver.findElements(By.id("chkSelectPublicUsers"));
+			Thread.sleep(1000);
+			chk.get(0).click();
+		}
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='btnUpdatePublicUser']")).click();
+		Thread.sleep(1500);
+		driver.findElement(By.xpath("//*[@id='btnOk']")).click();
+	}
+public void FundingProcess() throws InterruptedException
+{
+	    Thread.sleep(2000);
+	    Select Cate=new Select(driver.findElement(category));
+	    Cate.selectByVisibleText("Complementary Fund");
+	    Thread.sleep(1500);
+	    Select inmate_id=new Select(driver.findElement(inmateId));
+	    inmate_id.selectByIndex(1);
+	    Thread.sleep(1000);
+	    driver.findElement(CompFunds).sendKeys("0");
+	    Thread.sleep(1000);
+	    driver.findElement(submit).click();
+	    Thread.sleep(1000);
+	    driver.findElement(By.xpath("//*[@id='btnOk']")).click();
+	    Thread.sleep(1000);
+	    driver.findElement(CompFunds).clear();
+	    driver.findElement(CompFunds).sendKeys("0.02");
+	    Thread.sleep(1000);
+	    driver.findElement(submit).click();
+	    Thread.sleep(1000);
+	    driver.findElement(By.xpath("//*[@id='btnOk']")).click();
+}
 	/* code for scroll */
 	private void scroll() throws InterruptedException {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -348,6 +314,10 @@ public class Publicuser_Page {
 	private void scroll1() throws InterruptedException {
 		JavascriptExecutor js1 = (JavascriptExecutor) driver;
 		js1.executeScript("javascript:window.scrollBy(0,-1700)");
+	}
+	private void scroll2000() throws InterruptedException {
+		JavascriptExecutor js1 = (JavascriptExecutor) driver;
+		js1.executeScript("javascript:window.scrollBy(0,-2000)");
 	}
 	private void scroll200() throws InterruptedException {
 		JavascriptExecutor js1 = (JavascriptExecutor) driver;
@@ -366,24 +336,78 @@ public class Publicuser_Page {
 
 	public void Sorting_Inmate_ID() throws Exception {
 
-		Thread.sleep(1000);
-		// driver.findElement(page_sort).click();
-		By list11 = By.id("lblInmateResidentId");
-		List<WebElement> myElements = driver.findElements(list11);
-		for (WebElement e : myElements) {
-			Thread.sleep(1000);
+		 Thread.sleep(1000);
+		 By list11 = By.id("lblInmateResidentId");
+		 Thread.sleep(1000);
+		 List<WebElement> myElements = driver.findElements(list11);
+		 for (WebElement e : myElements) {
 			System.out.println(e.getText());
-
 		}
-		/*
-		 * List<WebElement> alllinks
-		 * =driver.findElements(By.id("lblInmateResidentId")); String a[]=new
-		 * String[alllinks.size()]; for(int i=0;i<alllinks.size();i++) {
-		 * a[i]=alllinks.get(i).getText(); Thread.sleep(1000);
-		 * System.out.println(a[i]); }
-		 */
+	
 	}
-
+    public void Sorting_Connections() throws Exception
+    {
+    	
+    	System.out.println("Inmate ID Ascending order");
+    	Thread.sleep(2000);
+   	    driver.findElement(By.xpath("//*[@id='grvPublicUsersInfo']/tbody/tr[1]/th[2]/a")).click();
+		Sorting_Inmate_ID();
+		System.out.println("Inmate ID Descending order");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='grvPublicUsersInfo']/tbody/tr[1]/th[2]/a")).click();
+		Thread.sleep(1000);
+		Sorting_Inmate_ID();
+		
+		System.out.println("Inmate Name Ascending order");
+    	Thread.sleep(1000);
+   	    driver.findElement(By.xpath("//*[@id='grvPublicUsersInfo']/tbody/tr[1]/th[3]/a")).click();
+   	    Sorting_Inmate_Name();
+		System.out.println("Inmate Name Descending order");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='grvPublicUsersInfo']/tbody/tr[1]/th[3]/a")).click();
+		Thread.sleep(1000);
+		Sorting_Inmate_Name();
+		
+		System.out.println("Inmate Status Ascending order");
+    	Thread.sleep(1000);
+    	driver.findElement(By.xpath("//*[@id='grvPublicUsersInfo']/tbody/tr[1]/th[4]/a")).click();
+   	    Sorting_Inmate_Status();
+		System.out.println("Inmate Status Descending order");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='grvPublicUsersInfo']/tbody/tr[1]/th[4]/a")).click();
+		Thread.sleep(1000);
+		Sorting_Inmate_Status();
+		
+		System.out.println("Inmate Relationship Ascending order");
+    	Thread.sleep(1000);
+   	    driver.findElement(By.xpath("//*[@id='grvPublicUsersInfo']/tbody/tr[1]/th[5]/a")).click();
+   	    Sorting_Inmate_Relationship();
+		System.out.println("Inmate Relationship Descending order");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='grvPublicUsersInfo']/tbody/tr[1]/th[5]/a")).click();
+		Thread.sleep(1000);
+		Sorting_Inmate_Relationship();
+		
+		System.out.println("Inmate ConnStatus Ascending order");
+    	Thread.sleep(1000);
+   	    driver.findElement(By.xpath("//*[@id='grvPublicUsersInfo']/tbody/tr[1]/th[6]/a")).click();
+   	    Sorting_Inmate_Connection_Status();
+		System.out.println("Inmate ConnStatus Descending order");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='grvPublicUsersInfo']/tbody/tr[1]/th[6]/a")).click();
+		Thread.sleep(1000);
+		Sorting_Inmate_Connection_Status();
+		
+		System.out.println("Inmate Credit Balance Ascending order");
+    	Thread.sleep(1000);
+   	    driver.findElement(By.xpath("//*[@id='grvPublicUsersInfo']/tbody/tr[1]/th[7]/a")).click();
+   	    Sorting_Inmate_Credit_Balance();
+		System.out.println("Inmate Credit Balance Descending order");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='grvPublicUsersInfo']/tbody/tr[1]/th[7]/a")).click();
+		Thread.sleep(1000);
+		Sorting_Inmate_Credit_Balance();
+    }
 	public void Sorting_Inmate_Name() throws Exception {
 		Thread.sleep(1000);
 		By list11 = By.id("lblInmateName");
@@ -394,16 +418,40 @@ public class Publicuser_Page {
 		}
 	}
 
-	public void Sorting_Inmate_Status() throws Exception {
-		Thread.sleep(1000);
-		By list11 = By.id("lblInmateStatus");
+	public void Sorting_SignInBrowser() throws Exception {
+		Thread.sleep(1500);
+		for(int i=0;i<1;i++)
+		{
+		By list11 = By.xpath("//*[@id='ContentPlaceHolder1_rptPublicUserLoginInfo_lblSigninBrowserType_"+i+"']");
 		List<WebElement> myElements = driver.findElements(list11);
 		for (WebElement e : myElements) {
 			Thread.sleep(1000);
 			System.out.println(e.getText());
-		}
+		}}
 	}
-
+	public void Sorting_SignInIpAddress() throws Exception {
+		Thread.sleep(1500);
+		for(int i=0;i<1;i++)
+		{
+		By list11 = By.xpath("//*[@id='ContentPlaceHolder1_rptPublicUserLoginInfo_lblSigninIPAddress_"+i+"']");
+		List<WebElement> myElements = driver.findElements(list11);
+		for (WebElement e : myElements) {
+			Thread.sleep(1000);
+			System.out.println(e.getText());
+		}}
+	}
+	public void Sorting_SigninOn() throws Exception {
+		Thread.sleep(1000);
+		for(int i=0;i<1;i++)
+		{                      
+		By list11 = By.xpath("//*[@id='ContentPlaceHolder1_rptPublicUserLoginInfo_lblSigninDateTime_"+i+"']");
+		List<WebElement> myElements = driver.findElements(list11);
+		for (WebElement e : myElements) {
+			Thread.sleep(1000);
+			System.out.println(e.getText());
+		}}
+	}
+	
 	public void Sorting_Inmate_Relationship() throws Exception {
 
 		Thread.sleep(1000);
@@ -416,7 +464,18 @@ public class Publicuser_Page {
 
 		}
 	}
+	public void Sorting_Inmate_Status() throws Exception {
 
+		Thread.sleep(1000);
+		// driver.findElement(page_sort).click();
+		By list11 = By.id("lblInmateStatus");
+		List<WebElement> myElements = driver.findElements(list11);
+		for (WebElement e : myElements) {
+			Thread.sleep(1000);
+			System.out.println(e.getText());
+
+		}
+	}
 	public void Sorting_Inmate_Connection_Status() throws Exception {
 
 		Thread.sleep(1000);
@@ -508,7 +567,7 @@ public class Publicuser_Page {
 	}
 
 	public void PublicUser_photos()
-			throws InterruptedException, AWTException {
+			throws Exception {
 		
 		POM_PubDefender pu = new POM_PubDefender(driver);
 		Thread.sleep(1500);
@@ -535,43 +594,100 @@ public class Publicuser_Page {
 		 */
 		Thread.sleep(1000);
 		pu.btnSearchPhotos.click();
-
 		Thread.sleep(1000);
-
-		/*
-		 * List<WebElement>
-		 * photoSubj=obj.findElements(By.id("lblPhotoSubject"));
-		 * Thread.sleep(1000); for(int i=0;i<1;i++) { Thread.sleep(1000);
-		 * photoSubj=obj.findElements(By.id("lblPhotoSubject"));
-		 * Thread.sleep(1000); photoSubj.get(i).click(); Thread.sleep(1000);
-		 * 
-		 * int x=1; switch(x) { case 1: Thread.sleep(1000);
-		 * obj.findElement(By.id("ContentPlaceHolder1_btnApprove")).click();
-		 * log.info("Photos Approved Success"); break; case 2:
-		 * Thread.sleep(1000);
-		 * obj.findElement(By.id("ContentPlaceHolder1_btnReject")).click();
-		 * log.info("Photos Rejected Success"); break; } int y=1; switch(y) {
-		 * case 1: Thread.sleep(1250); obj.findElement(By.id("btnYes")).click();
-		 * break; case 2: Thread.sleep(1200);
-		 * obj.findElement(By.id("btnNo")).click(); break; }
-		 * 
-		 * Thread.sleep(1000); pu.btnOk.click(); Thread.sleep(1000); //
-		 * pu.Back3.click();
-		 * 
-		 * 
-		 * }
-		 */
-
 		Thread.sleep(1000);
 		ScrollUp250();
-		// pu.PublicUser_Photos_Subject_Sort();
-		// pu.PublicUser_Photos_From_Sort();
-		// pu.PublicUser_Photos_To_Sort();
-		// pu.PublicUser_Photos_SentOn_Sort();
-		//pu.PublicUser_Photos_Status_Sort();
+		
+		Photos_Sort();
+		
+		/*pu.PublicUser_Photos_Subject_Sort();
+		pu.PublicUser_Photos_From_Sort1();
+	    pu.PublicUser_Photos_To_Sort();
+		pu.PublicUser_Photos_SentOn_Sort();
+		pu.PublicUser_Photos_Status_Sort();*/
 
 	}
+	public void Pagination_photos() throws InterruptedException
+	{
+	/*	for(int i=0;i<4;i++)
+		{
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnNextPh']")).click();
+		}*/
+		List<WebElement> pag =driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnNextPh']"));
 
+		pag.size(); 
+		System.out.println(pag.size()); 
+		if(pag .size()>0){ 
+		System.out.println("pagination exists");
+
+		// click on pagination link
+
+		for(int i=0; i<pag.size(); i++){ 
+			
+			Thread.sleep(1000);
+			pag =driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnNextPh']"));
+			Thread.sleep(1000);
+			pag.get(i).click();
+
+		} 
+		} else { 
+		System.out.println("pagination not exists"); 
+		} 
+		}
+public void Photos_Sort() throws Exception
+{
+	POM_PubDefender pu = new POM_PubDefender(driver);
+	System.out.println("Photos Subj Ascending order");
+	Thread.sleep(1000);
+	driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkSubject']")).click();
+	pu.PublicUser_Photos_Subject_Sort1();
+	System.out.println("Photos Subj Descending order");
+	Thread.sleep(1000);
+	driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkSubject']")).click();
+	Thread.sleep(1000);
+	pu.PublicUser_Photos_Subject_Sort1();
+	
+	System.out.println("Photos from Ascending order");
+	Thread.sleep(1000);
+	driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkFrom']")).click();
+	pu.PublicUser_Photos_From_Sort1();
+	System.out.println("Photos from Descending order");
+	Thread.sleep(1000);
+	driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkFrom']")).click();
+	Thread.sleep(1000);
+	pu.PublicUser_Photos_From_Sort1();
+
+	System.out.println("Photos to Ascending order");
+	Thread.sleep(1000);
+	driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkTo']")).click();
+	pu.PublicUser_Photos_To_Sort1();
+	System.out.println("Photos to Descending order");
+	Thread.sleep(1000);
+	driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkTo']")).click();
+	Thread.sleep(1000);
+	pu.PublicUser_Photos_To_Sort1();
+	
+	System.out.println("Photos SentOn Ascending order");
+	Thread.sleep(1000);
+	driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkSentOn']")).click();
+	pu.PublicUser_Photos_SentOn_Sort1();
+	System.out.println("Photos SentOn Descending order");
+	Thread.sleep(1000);
+	driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkSentOn']")).click();
+	Thread.sleep(1000);
+	pu.PublicUser_Photos_SentOn_Sort1();
+	
+	System.out.println("Photos Status Ascending order");
+	Thread.sleep(1000);
+	driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkStatus']")).click();
+	pu.PublicUser_Photos_Status_Sort1();
+	System.out.println("Photos Status Descending order");
+	Thread.sleep(1000);
+	driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkStatus']")).click();
+	Thread.sleep(1000);
+	pu.PublicUser_Photos_Status_Sort1();
+}
 	public void ScrollDown450() {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		jse.executeScript("window.scrollBy(0,-450)", "");

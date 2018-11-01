@@ -16,11 +16,20 @@ import org.testng.annotations.AfterMethod;
 //import com.framework.screenshot.CaptureScreenshot;
 
 
+
+
+
+
+
+
 import AdminLogin_Inmate.Log;
 
 public class Management_User_Page {
 	public WebDriver driver;
-
+public Management_User_Page(WebDriver driver)
+{
+	this.driver=driver;
+}
 	By menu_mgmt_user = By.xpath(".//*[@id='rptUser_menuAnchor_1']");
 	By btn_add_user = By.xpath(".//*[@id='ContentPlaceHolder1_btnAddUser']");
 	By txt_fname = By.id("ContentPlaceHolder1_txtFirstName");
@@ -39,6 +48,7 @@ public class Management_User_Page {
 	By btn_submit = By.id("btnSubmit");
 	By btn_popup = By.id("btnOk");
 	By lnk_list_fac_admin = By.id("ContentPlaceHolder1_grvManagementUsers_lblFullName_0");
+	By lnk_list_fac_admin1=By.xpath("//*[@id='ContentPlaceHolder1_rptAdminUsers_lnkFullName_0']");
 	By txt_middle_name = By.id("ContentPlaceHolder1_txtMiddleName");
 	By btn_update1 = By.name("ctl00$ContentPlaceHolder1$btnSubmit");
 	By btn_ok = By.name("ctl00$ContentPlaceHolder1$uctlMessage$btnOk");
@@ -67,12 +77,13 @@ public class Management_User_Page {
 	public void Mgmt_user_Add_Facilityadmin(String fname,String lname,String uname,String pwd) throws Exception{
 		try {
 			Thread.sleep(1000);	
-			this.driver = new Login_Page().getDriver();
+			
 			Thread.sleep(1000);
 			Logger Log=Logger.getLogger("Login_Page");
 			PropertyConfigurator.configure("log4j.properties");
-
 			System.out.println("Navigated to mgmt user");
+			Thread.sleep(2000);
+			scroll2();
 			Thread.sleep(1000);
 			driver.findElement(menu_mgmt_user).click();
 			Log.info("Management user menu has been chosen");	
@@ -168,7 +179,7 @@ public class Management_User_Page {
 
 			Logger Log=Logger.getLogger("Login_Page");
 			PropertyConfigurator.configure("log4j.properties");
-			this.driver = new Login_Page().getDriver();	
+			
 			System.out.println("Navigated to mgmt user");
 			driver.findElement(menu_mgmt_user).click();
 			Log.info("Management user menu has been chosen");				
@@ -176,14 +187,14 @@ public class Management_User_Page {
 			sel.selectByValue("114");
 			Log.info("Facility code has been chosen");
 			Thread.sleep(2000);
-			driver.findElement(txt_fullname).sendKeys("fac");
+			driver.findElement(txt_fullname).sendKeys("ad");
 			Log.info("Full name has been entered");
 			Thread.sleep(1000);
 			driver.findElement(btn_search).click();
 			Log.info("search button has been chosen");
 			Thread.sleep(1000);
-			List<WebElement> myElements = driver.findElements(lnk_list_fac_admin);
-			Thread.sleep(1000);			
+			List<WebElement> myElements = driver.findElements(lnk_list_fac_admin1);
+			Thread.sleep(2000);			
 			myElements.get(0).click();		
 			Log.info("Edit option is clicked");
 			Thread.sleep(2000);
@@ -207,11 +218,11 @@ public class Management_User_Page {
 			//JavascriptExecutor executor = (JavascriptExecutor)driver;
 			//executor.executeScript("arguments[0].click()", element);
 			scroll();
-			webdriverWait(btn_update1, 50);
+			Thread.sleep(2000);
 			driver.findElement(btn_update1).click();
 			Log.info("Update button has been selected");
 
-			webdriverWait(btn_ok, 50);
+			Thread.sleep(2000);
 			driver.findElement(btn_ok).click();
 			Log.info("Ok popup has been chosen");
 
@@ -224,7 +235,7 @@ public class Management_User_Page {
 		try {
 			Logger Log=Logger.getLogger("Login_Page");
 			PropertyConfigurator.configure("log4j.properties");
-			this.driver = new Login_Page().getDriver();	
+			
 			System.out.println("Navigated to mgmt user");
 			driver.findElement(menu_mgmt_user).click();
 			Log.info("Management user menu has been chosen");				
@@ -286,12 +297,17 @@ public class Management_User_Page {
 		js.executeScript("javascript:window.scrollBy(0,950)");
 		Thread.sleep(1000);
 	}
-
+public void scroll2()
+{
+	JavascriptExecutor js = (JavascriptExecutor) driver;
+   js.executeScript("javascript:window.scrollBy(0,-250)");
+	
+}
 	/* code for explicit wait*/
-	public void webdriverWait(By locator, long sec){
-		WebDriverWait wait = new WebDriverWait(driver, 50);
-		wait.until(ExpectedConditions.elementToBeClickable(locator));
-	}
+//	public void webdriverWait(By locator, long sec){
+//		WebDriverWait wait = new WebDriverWait(driver, 50);
+//		wait.until(ExpectedConditions.elementToBeClickable(locator));
+//	}
 
 
 	/* Add Facility Staff*/
@@ -299,7 +315,7 @@ public class Management_User_Page {
 		try {
 			Thread.sleep(1000);
 
-			this.driver = new Login_Page().getDriver();	
+			
 			Logger Log=Logger.getLogger("Login_Page");
 			PropertyConfigurator.configure("log4j.properties");
 
@@ -386,7 +402,7 @@ public class Management_User_Page {
 
 			Logger Log=Logger.getLogger("Login_Page");
 			PropertyConfigurator.configure("log4j.properties");
-			this.driver = new Login_Page().getDriver();	
+			
 			System.out.println("Navigated to mgmt user");
 			driver.findElement(menu_mgmt_user).click();
 			Log.info("Management user menu has been chosen");				
@@ -400,9 +416,10 @@ public class Management_User_Page {
 			driver.findElement(btn_search).click();
 			Log.info("search button has been chosen");
 			Thread.sleep(1000);
-			List<WebElement> myElements = driver.findElements(lnk_list_fac_staff);
+			/*List<WebElement> myElements = driver.findElements(lnk_list_fac_staff);
 			Thread.sleep(1000);			
-			myElements.get(0).click();		
+			myElements.get(0).click();	*/	
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptAdminUsers_lnkFullName_0']")).click();
 			Log.info("Edit option is clicked");
 			Thread.sleep(2000);
 			driver.findElement(txt_fname).clear();
@@ -422,11 +439,11 @@ public class Management_User_Page {
 			executor8.executeScript("arguments[0].click();", element8);			
 
 			scroll();
-			webdriverWait(btn_update1, 50);
+			Thread.sleep(2000);
 			driver.findElement(btn_update1).click();
 			Log.info("Update button has been selected");
 
-			webdriverWait(btn_ok, 50);
+			Thread.sleep(2000);
 			driver.findElement(btn_ok).click();
 			Log.info("Ok popup has been chosen");
 
@@ -440,7 +457,7 @@ public class Management_User_Page {
 		try {
 
 			Thread.sleep(1000);
-			this.driver = new Login_Page().getDriver();	
+			
 			Logger Log=Logger.getLogger("Login_Page");
 			PropertyConfigurator.configure("log4j.properties");
 
@@ -495,7 +512,7 @@ public class Management_User_Page {
 			try {
 				Logger Log=Logger.getLogger("Login_Page");
 				PropertyConfigurator.configure("log4j.properties");
-				this.driver = new Login_Page().getDriver();	
+				
 				System.out.println("Navigated to mgmt user");
 				driver.findElement(menu_mgmt_user).click();
 				Log.info("Management user menu has been chosen");				
@@ -503,14 +520,14 @@ public class Management_User_Page {
 				sel.selectByValue("114");
 				Log.info("Facility code has been chosen");
 				Thread.sleep(2000);
-				driver.findElement(txt_fullname).sendKeys("admin pd");
+				driver.findElement(txt_fullname).sendKeys("");
 				Log.info("Full name has been entered");
 				Thread.sleep(1000);
 				driver.findElement(btn_search).click();
 				Log.info("search button has been chosen");
 				Thread.sleep(1000);
 				List<WebElement> myElements = driver.findElements(lnk_list_fac_staff);
-				Thread.sleep(1000);			
+				Thread.sleep(21000);			
 				myElements.get(0).click();		
 				Log.info("Edit option is clicked");
 				Thread.sleep(2000);
@@ -518,11 +535,11 @@ public class Management_User_Page {
 				driver.findElement(txt_fname).sendKeys("hello pdsadmin");
 				Thread.sleep(2000);	
 				scroll();
-				webdriverWait(btn_update1, 50);
+				Thread.sleep(2000);
 				driver.findElement(btn_update1).click();
 				Log.info("Update button has been selected");
 
-				webdriverWait(btn_ok, 50);
+				Thread.sleep(2000);
 				driver.findElement(btn_ok).click();
 				Log.info("Ok popup has been chosen");
 			}catch(Exception e){
@@ -536,7 +553,7 @@ public class Management_User_Page {
 			try {
 
 				Thread.sleep(1000);
-				this.driver = new Login_Page().getDriver();	
+				
 				Logger Log=Logger.getLogger("Login_Page");
 				PropertyConfigurator.configure("log4j.properties");
 
@@ -592,7 +609,7 @@ public class Management_User_Page {
 			try {
 				Logger Log=Logger.getLogger("Login_Page");
 				PropertyConfigurator.configure("log4j.properties");
-				this.driver = new Login_Page().getDriver();	
+				
 				System.out.println("Navigated to mgmt user");
 				driver.findElement(menu_mgmt_user).click();
 				Log.info("Management user menu has been chosen");				
@@ -615,11 +632,11 @@ public class Management_User_Page {
 				driver.findElement(txt_fname).sendKeys("hello pstaff");
 				Thread.sleep(2000);	
 				scroll();
-				webdriverWait(btn_update1, 50);
+				Thread.sleep(2000);
 				driver.findElement(btn_update1).click();
 				Log.info("Update button has been selected");
 
-				webdriverWait(btn_ok, 50);
+				Thread.sleep(2000);
 				driver.findElement(btn_ok).click();
 				Log.info("Ok popup has been chosen");
 			}catch(Exception e){
@@ -631,7 +648,7 @@ public class Management_User_Page {
 		public void Add_super_admin(){
 			try {
 				Thread.sleep(1000);
-				this.driver = new Login_Page().getDriver();	
+				
 				Logger Log=Logger.getLogger("Login_Page");
 				PropertyConfigurator.configure("log4j.properties");
 
@@ -686,7 +703,7 @@ public class Management_User_Page {
 			try {
 				Logger Log=Logger.getLogger("Login_Page");
 				PropertyConfigurator.configure("log4j.properties");
-				this.driver = new Login_Page().getDriver();	
+				
 				System.out.println("Navigated to mgmt user");
 				driver.findElement(menu_mgmt_user).click();
 				Log.info("Management user menu has been chosen");				
@@ -710,15 +727,157 @@ public class Management_User_Page {
 				Thread.sleep(2000);	
 				scroll();
 				scroll();
-				webdriverWait(btn_submit, 50);
+				Thread.sleep(2000);
 				driver.findElement(btn_submit).click();
 				Log.info("Update button has been selected");
 
-				webdriverWait(btn_ok, 50);
+				Thread.sleep(2000);
 				driver.findElement(btn_ok).click();
 				Log.info("Ok popup has been chosen");
+				Thread.sleep(4000);
+				for (int i=2;i<5;i++)
+				{
+					Thread.sleep(1000);
+					driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_grvManagementUsers']/tbody/tr[12]/td/table/tbody/tr/td["+i+"]/a")).click();
+				}
+				
 			}catch(Exception e){
 				e.printStackTrace();
 			}
 		}
+		public void Sorting(){	
+			try {
+			  Logger logger=Logger.getLogger("Login_Page");
+				PropertyConfigurator.configure("log4j.properties");	
+			//	driver.findElement(menu_facility).click();
+				Thread.sleep(1500);
+
+				logger.info("Export to excel link clicked successfully");
+				scroll();
+				Thread.sleep(2000);	
+					
+				System.out.println("Before Fullname sorting");			
+				sort_fullname();
+				Thread.sleep(2000);
+				System.out.println("After Fullname sorting");	
+				sort_fullname();
+				
+				System.out.println("Before Role sorting");			
+				sort_Role();	
+				Thread.sleep(2000);
+				System.out.println("After Role sorting");	
+				sort_Role();
+				
+				System.out.println("Before City sorting");			
+				sort_City();	
+				Thread.sleep(2000);
+				System.out.println("After city sorting");	
+				sort_City();
+				
+				System.out.println("Before Zip sorting");			
+				sort_Zip();	
+				Thread.sleep(2000);
+				System.out.println("After Zip sorting");	
+				sort_Zip();
+				
+				System.out.println("Before status sorting");			
+				sort_Status();	
+				Thread.sleep(2000);
+				System.out.println("After status sorting");	
+				sort_Status();
+				
+			} catch (Exception e) {			
+				e.printStackTrace();
+			}
+
+		}
+		public void sort_fullname() throws Exception{
+			try{
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptAdminUsers_lnkCode']")).click();
+			
+			Thread.sleep(1000);
+			for(int i=0;i<10;i++)
+			{
+			List<WebElement> sortcode = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptAdminUsers_lnkFullName_"+i+"']"));
+			Thread.sleep(1000);
+			for(WebElement e:sortcode){
+				Thread.sleep(2000);
+				System.out.println(e.getText());
+			}
+			}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+		public void sort_Role() throws Exception{
+			try{
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptAdminUsers_lnkRole']")).click();
+			Thread.sleep(2000);
+			for(int i=0;i<10;i++)
+			{
+			List<WebElement> sortcode1 = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptAdminUsers_lblUserRoleName_"+i+"']"));
+			for(WebElement e:sortcode1){
+				Thread.sleep(2000);
+				System.out.println(e.getText());
+			}}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+		
+		public void sort_City() throws Exception{
+			try{
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptAdminUsers_lnkCity']")).click();		
+			Thread.sleep(2000);
+			for(int i=0;i<10;i++)
+			{
+			List<WebElement> sortname = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptAdminUsers_lblCity_"+i+"']"));
+			for(WebElement e:sortname){
+				Thread.sleep(2000);
+				System.out.println(e.getText());
+			}}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+		public void sort_Zip() throws Exception{
+			try{
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptAdminUsers_lnkZip']")).click();		
+			Thread.sleep(1000);
+			for(int i=0;i<10;i++)
+			{
+			List<WebElement> sortname = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptAdminUsers_lblZIP_"+i+"']"));
+			for(WebElement e:sortname){
+				Thread.sleep(2000);
+				System.out.println(e.getText());
+			}}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		public void sort_Status() throws Exception{
+			try{
+			Thread.sleep(2000);
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptAdminUsers_lnkStatus']")).click();		
+			Thread.sleep(1000);
+			for(int i=0;i<10;i++)
+			{
+			List<WebElement> sortname = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptAdminUsers_imgStatus_"+i+"']"));
+			for(WebElement e:sortname){
+				Thread.sleep(2000);
+				System.out.println(e.getText());
+			}}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+		
 }

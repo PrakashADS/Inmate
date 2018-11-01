@@ -48,6 +48,7 @@ public class Photo_Page {
 			
 		Logger Log=Logger.getLogger("Login_Page");
 		PropertyConfigurator.configure("log4j.properties");
+		Thread.sleep(2000);
 		driver.findElement(menu_photo).click();
 		Log.info("Photo menu has been chosen");
 		Select sel = new Select(driver.findElement(By.id("ddlFacilityCodes")));

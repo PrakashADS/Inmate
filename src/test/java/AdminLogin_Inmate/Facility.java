@@ -22,6 +22,23 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import PageObjectModel.POM_PubDefender;
 
 import com.gargoylesoftware.htmlunit.javascript.host.media.webkitMediaStream;
@@ -156,15 +173,15 @@ public class Facility   {
 			Thread.sleep(2000);
 			driver.findElement(btn_save).click();
 			Thread.sleep(1000);*/
-			driver.findElement(btn_browse).sendKeys("C:\\Users\\prakashd\\Desktop\\thumb-up-sign_318-63754.jpg");
+       	driver.findElement(btn_browse).sendKeys("C:\\Users\\prakashd.MPIDC\\Desktop\\thumb.png");
 			logger.info("Logo chosen successfully");
 			Thread.sleep(1000);	
 			/*scroll();
 			Thread.sleep(2000);
 			driver.findElement(btn_save).click();
 			Thread.sleep(1000);	*/
-			driver.findElement(btn_upload).click();
-			logger.info("Upload button chosen successfully");
+     driver.findElement(btn_upload).click();
+	  	logger.info("Upload button chosen successfully");
 			/*scroll();
 			Thread.sleep(2000);
 			driver.findElement(btn_save).click();	*/
@@ -185,6 +202,8 @@ public class Facility   {
 			/*scroll();
 			Thread.sleep(2000);*/
 			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_txtAddress2']")).sendKeys("Mexico");
+			Thread.sleep(1000);
 			driver.findElement(By.id("ContentPlaceHolder1_txtCity")).sendKeys(fac.get(5).get(1));
 			Thread.sleep(1000);
 			Select state = new Select(driver.findElement(By.name("ctl00$ContentPlaceHolder1$ddlState")));
@@ -194,40 +213,126 @@ public class Facility   {
 			driver.findElement(By.id("ContentPlaceHolder1_txtZipCode")).sendKeys(fac.get(7).get(1));
 			Thread.sleep(1500);
 			scroll250();
-			driver.findElement(chk_message).click();
-			logger.info("Message checkbox chosen successfully");
+			Thread.sleep(1000);
+			boolean MessageSelected=driver.findElement(chk_message).isSelected();
+			if(MessageSelected==true)
+			{
+				String MsgCost=driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_txtCostOfMessage']")).getText();
+				System.out.println("Message cost Already Entered as:"+MsgCost);
+			}
+			else{
+				Thread.sleep(1000);
+				driver.findElement(chk_message).click();
+				logger.info("Message checkbox chosen successfully");
+				Thread.sleep(2000);
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_txtCostOfMessage']")).sendKeys(fac.get(25).get(1));
+			}
+			
+			
 			Thread.sleep(1000);		
 			driver.findElement(chk_document).click();
 			logger.info("Document checkbox chosen successfully");
-			Thread.sleep(1000);		
-			driver.findElement(chk_photo).click();
-			logger.info("Photo checkbox chosen successfully");
+			Thread.sleep(1000);	
+			
+			boolean PhotoSelected=driver.findElement(chk_photo).isSelected();
+			if(PhotoSelected==true)
+			{
+				String PhoCost=driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_txtPhotoCost']")).getText();
+				System.out.println("Photo cost Already Entered as:"+PhoCost);
+			}
+			else{
+				Thread.sleep(1000);
+				driver.findElement(chk_photo).click();
+				logger.info("Photo checkbox chosen successfully");
+				Thread.sleep(2000);
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_txtPhotoCost']")).sendKeys(fac.get(26).get(1));
+			}			
 			Thread.sleep(1000);		
 			driver.findElement(chk_request).click();
 			logger.info("Request checkbox chosen successfully");
-			Thread.sleep(1000);
-			driver.findElement(chk_commissary).click();
-			logger.info("Commissary checkbox chosen successfully");
-			Thread.sleep(2000);		
-			driver.findElement(txt_commissary).sendKeys(fac.get(8).get(1));
-			logger.info("Commissary textbox entered successfully");
-			Thread.sleep(1500);
-			driver.findElement(chk_lawlibrary).click();
-			logger.info("Lawlibrary checkbox chosen successfully");
+			
+			boolean Commissary=driver.findElement(chk_commissary).isSelected();
+			if(Commissary==true)
+			{
+				String CommissaryURL=driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_txtCommisaryUrl']")).getText();
+				System.out.println("Photo cost Already Entered as:"+CommissaryURL);
+			}
+			else{
+				Thread.sleep(1000);			
+				driver.findElement(chk_commissary).click();
+				logger.info("Commissary checkbox chosen successfully");
+				Thread.sleep(2000);		
+				driver.findElement(txt_commissary).sendKeys(fac.get(8).get(1));
+				logger.info("Commissary textbox entered successfully");
+			}
+			boolean LawLibrary=driver.findElement(chk_lawlibrary).isSelected();
+			if(LawLibrary==true)
+			{
+				String LawLibrayURL=driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_txtCommisaryUrl']")).getText();
+				System.out.println("Law Library Already Entered as:"+LawLibrayURL);
+			}
+			else{
+				Thread.sleep(1000);			
+				driver.findElement(chk_lawlibrary).click();
+				logger.info("Lawlibrary checkbox chosen successfully");
+				Thread.sleep(2000);		
+				driver.findElement(txt_lawlibrary).sendKeys(fac.get(9).get(1));
+				logger.info("Law library textbox entered successfully");
+			}
+			boolean FreeCredits=driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_chkFreeCredits']")).isSelected();
+			if(FreeCredits==true)
+			{
+				System.out.println("Free Credits limits are alreday filled");
+			}
+			else{
+				Thread.sleep(1500);       
+				driver.findElement(By.id("ContentPlaceHolder1_chkFreeCredits")).click();
+				Thread.sleep(1000);
+				Select freq=new Select(driver.findElement(By.xpath("//*[@id='ddlCreditFrequency']")));
+				freq.selectByVisibleText("Weekly");
+				Thread.sleep(1000);
+				Select Credits=new Select(driver.findElement(By.xpath("//*[@id='ddlFreeCredits']")));
+				Credits.selectByVisibleText("1.00");
+				Thread.sleep(1000);
+				int z=1;
+				switch(z)
+				{
+				case 1:
+				      driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rdoFreeCredits_0']")).click();
+				      break;
+				case 2:
+			         driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rdoFreeCredits_1']")).click();
+			         break;
+			     }
+			}
+			
+			boolean PubUser_isSelected=driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_chkInvitePublicUser']")).isSelected();
+			if(PubUser_isSelected==true)
+			{
+				System.out.println("Invite PublicUser detaisl are already filled");
+			}
+			else{
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_chkInvitePublicUser']")).click();
+				Thread.sleep(1000);
+				Select ReqFreq=new Select(driver.findElement(By.xpath("//*[@id='ddlFrequencyType']")));
+				ReqFreq.selectByVisibleText("Daily");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_txtFrequencyLimits']")).sendKeys("1500");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_txtLimitsPerSource']")).sendKeys("500");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rdoInvitePublicUserStatus_0']")).click();
+			}
+			/*driver.findElement(dwn_visitor).click();
+			logger.info("Visitor checkbox chosen successfully");
+			Thread.sleep(1000);			
+			driver.findElement(dwn_admin).click();
+			logger.info("Admin checkbox chosen successfully");
 			Thread.sleep(1000);	
-			driver.findElement(txt_lawlibrary).sendKeys(fac.get(9).get(1));
-			logger.info("Law library textbox entered successfully");
-			Thread.sleep(1500);
-			driver.findElement(By.id("ContentPlaceHolder1_chkFreeCredits")).click();
-//			driver.findElement(dwn_visitor).click();
-//			logger.info("Visitor checkbox chosen successfully");
-//			Thread.sleep(1000);			
-//			driver.findElement(dwn_admin).click();
-//			logger.info("Admin checkbox chosen successfully");
-//			Thread.sleep(1000);	
-//			driver.findElement(dwn_request).click();
-//			logger.info("Request checkbox chosen successfully");						
-			//webdriverWait(btn_Addform, 50);	
+			driver.findElement(dwn_request).click();
+			logger.info("Request checkbox chosen successfully");	*/					
+		//	webdriverWait(btn_Addform, 50);	
 			Thread.sleep(2500);
 			Select freq=new Select(driver.findElement(By.id("ddlCreditFrequency")));
 			freq.selectByValue("2");
@@ -235,14 +340,16 @@ public class Facility   {
 			Select cred=new Select(driver.findElement(By.id("ddlFreeCredits")));
 			cred.selectByValue("2");
 			Thread.sleep(1000);
-			List<WebElement> chk=driver.findElements(By.name("ctl00$ContentPlaceHolder1$rblFacilityStatus"));
+		/*	List<WebElement> chk=driver.findElements(By.name("ctl00$ContentPlaceHolder1$rblFacilityStatus"));
 			Boolean isSelected=chk.get(0).isSelected();
 			
 				if(isSelected=true)
 				{
+					Thread.sleep(1000);
 					chk.get(0).click();
 				}
 				else{
+					Thread.sleep(1000);
 					chk.get(1).click();
 				}
 			    Thread.sleep(1500);
@@ -273,7 +380,7 @@ public class Facility   {
 						}
 						else{
 							chk1.get(1).click();
-						}
+						} */
 				
 					Thread.sleep(2000);
 					scroll350();
@@ -340,11 +447,6 @@ public class Facility   {
 			driver.findElement(txt_pd).sendKeys("pd form");
 			logger.info("Request form has been entered");
 			Thread.sleep(1000);	
-			
-			
-			
-			
-			
 		//	driver.findElement(btn_ok).click();
 			logger.info("Ok button has been clicked");
 			driver.findElement(txt_admin).sendKeys("Administrative Remedy form");
@@ -405,7 +507,6 @@ public class Facility   {
 			driver.findElement(By.id("ContentPlaceHolder1_txtFacilityCodeSearch")).sendKeys("fac");
 			Thread.sleep(2000);
 			driver.findElement(By.name("ctl00$ContentPlaceHolder1$btnSearch")).click();		
-		
 			Thread.sleep(2000);
 			List<WebElement> myElements = driver.findElements(edit_fac);
 			Thread.sleep(2000);
@@ -442,56 +543,65 @@ public class Facility   {
 	}
 
 	/* Pagination and Export to Excel */
-	public void Pagination(){	
+	public void Sorting(){	
 		try {
-			/*Logger logger=Logger.getLogger("Login_Page");
+		//Logger logger=Logger.getLogger("Login_Page");
 			PropertyConfigurator.configure("log4j.properties");	
-			//driver.findElement(menu_facility).click();*/
-			
-			//driver.findElement(lnk_Export_to_excel).click();
+		//	driver.findElement(menu_facility).click();
+			Thread.sleep(1500);
+			driver.findElement(lnk_Export_to_excel).click();
 			logger.info("Export to excel link clicked successfully");
-			webdriverWait(pagination, 50);
-			logger.info("Navigated to list page");
 			scroll();
 			Thread.sleep(2000);	
-			
-			Thread.sleep(4000);			
-			driver.findElement(pagination).click();
-			logger.info("Pagination has been chosen");			
-			logger.info("Before Code sorting");			
-			sort_code_before();	
+				
+			System.out.println("Before Code sorting");			
+			sort_code();	
 			Thread.sleep(2000);
 			driver.findElement(sort_code).click();
-			//System.out.println("sort code clicked successfully");
-			logger.info("After code sorting");
-			sort_code_after();
+			System.out.println("After Code sorting");	
+			sort_code();
 			
-			logger.info("Before Name sorting");			
-			sort_name_before();			
-			driver.findElement(sort_name).click();
-			logger.info("After Name sorting");
-			sort_name_after();
+			System.out.println("Before name sorting");			
+			sort_Name();	
+			Thread.sleep(2000);
+			driver.findElement(sort_code).click();
+			System.out.println("After name sorting");	
+			sort_Name();
 			
-			/*logger.info("Before City sorting");			
-			//sort_city_before();			
-			driver.findElement(sort_city).click();
-			logger.info("After City sorting");
-			sort_city_after();*/
+			System.out.println("Before City sorting");			
+			sort_City();	
+			Thread.sleep(2000);
+			driver.findElement(sort_code).click();
+			System.out.println("After city sorting");	
+			sort_City();
 			
-			logger.info("Before State sorting");			
-			sort_state_before();			
-			driver.findElement(sort_state).click();
-			logger.info("After State sorting");
-			sort_state_after();
+			System.out.println("Before state sorting");			
+			sort_State();	
+			Thread.sleep(2000);
+			driver.findElement(sort_code).click();
+			System.out.println("After state sorting");	
+			sort_State();
 			
-			
+			System.out.println("Before status sorting");			
+			sort_Status();	
+			Thread.sleep(2000);
+			driver.findElement(sort_code).click();
+			System.out.println("After status sorting");	
+			sort_Status();
 			
 		} catch (Exception e) {			
 			e.printStackTrace();
 		}
 
 	}
-
+   public void Pagination() throws InterruptedException
+   {
+	 Thread.sleep(2000);
+	 driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnNext']")).click();
+	 Thread.sleep(1000);
+	 driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnPrev']")).click();
+		
+   }
 	/* code for scroll */
 	private void scroll() {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -506,132 +616,100 @@ public class Facility   {
 		js.executeScript("javascript:window.scrollBy(0,350)");
 	}
 	/* code for Explicit wait */
-	public void webdriverWait(By locator, long sec){
+/*	public void webdriverWait(By locator, long sec){
 		WebDriverWait wait = new WebDriverWait(driver, 50);
 		wait.until(ExpectedConditions.elementToBeClickable(locator));
 	}
-
-	public void sort_code_before() throws Exception{
+*/
+	public void sort_code() throws Exception{
 		try{
 		Thread.sleep(1000);
-		driver.findElement(sort_code).click();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptFacility_lnkCode']")).click();
 		
-		Thread.sleep(2000);
-		List<WebElement> sortcode = driver.findElements(sort_lnk_code);
+		Thread.sleep(1000);
+		for(int i=0;i<10;i++)
+		{
+		List<WebElement> sortcode = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptFacility_lnkFacilityID_"+i+"']"));
 		Thread.sleep(1000);
 		for(WebElement e:sortcode){
 			Thread.sleep(2000);
 			System.out.println(e.getText());
 		}
+		}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
-	public void sort_code_after() throws Exception{
+	public void sort_Name() throws Exception{
 		try{
 		Thread.sleep(1000);
-		driver.findElement(sort_code).click();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptFacility_lnkName']")).click();
 		Thread.sleep(2000);
-		List<WebElement> sortcode1 = driver.findElements(sort_lnk_code);
+		for(int i=0;i<10;i++)
+		{
+		List<WebElement> sortcode1 = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptFacility_lblFacilityDescription_"+i+"']"));
 		for(WebElement e:sortcode1){
 			Thread.sleep(2000);
 			System.out.println(e.getText());
-		}
+		}}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
 	
-	public void sort_name_before() throws Exception{
+	public void sort_City() throws Exception{
 		try{
 		Thread.sleep(1000);
-		driver.findElement(sort_name).click();		
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptFacility_lnkCity']")).click();		
 		Thread.sleep(2000);
-		List<WebElement> sortname = driver.findElements(sort_lnk_name);
+		for(int i=0;i<10;i++)
+		{
+		List<WebElement> sortname = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptFacility_lblCity_"+i+"']"));
 		for(WebElement e:sortname){
 			Thread.sleep(2000);
 			System.out.println(e.getText());
-		}
+		}}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
-	public void sort_name_after() throws Exception{
+	public void sort_State() throws Exception{
 		try{
 		Thread.sleep(1000);
-		driver.findElement(sort_name).click();		
-		Thread.sleep(2000);
-		List<WebElement> sortname = driver.findElements(sort_lnk_name);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptFacility_lnkState']")).click();		
+		Thread.sleep(1000);
+		for(int i=0;i<10;i++)
+		{
+		List<WebElement> sortname = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptFacility_lblState_"+i+"']"));
 		for(WebElement e:sortname){
 			Thread.sleep(2000);
 			System.out.println(e.getText());
+		}}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
+	}
+	public void sort_Status() throws Exception{
+		try{
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptFacility_lnkStatus']")).click();		
+		Thread.sleep(1000);
+		for(int i=0;i<10;i++)
+		{
+		List<WebElement> sortname = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptFacility_imgStatus_"+i+"']"));
+		for(WebElement e:sortname){
+			Thread.sleep(2000);
+			System.out.println(e.getAttribute("title"));
+		}}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
-	/*public void sort_city_before() throws Exception{
-		Thread.sleep(1000);
-		driver.findElement(sort_city).click();		
-		webdriverWait(sort_lnk_city, 50);
-		List<WebElement> sortcity = driver.findElements(sort_lnk_city);
-		for(WebElement e:sortcity){
-			Thread.sleep(2000);
-			System.out.println(e.getText());
-		}
-	}*/
 	
-	public void sort_city_after() throws Exception{
-		try {
-			Thread.sleep(1000);
-			driver.findElement(sort_city).click();		
-			Thread.sleep(2000);
-			List<WebElement> sortcity = driver.findElements(sort_lnk_city);
-			for(WebElement e:sortcity){
-				Thread.sleep(2000);
-				System.out.println(e.getText());
-			}
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-	}
-	
-	public void sort_state_before() throws Exception{
-		try {
-			Thread.sleep(2000);
-			driver.findElement(sort_state).click();		
-			Thread.sleep(2000);
-			List<WebElement> sortstate = driver.findElements(sort_lnk_state);
-			for(WebElement e:sortstate){
-				Thread.sleep(2000);
-				System.out.println(e.getText());
-			}
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-	}
-	
-	public void sort_state_after() throws Exception{
-		try {
-			Thread.sleep(1000);
-			driver.findElement(sort_state).click();		
-			Thread.sleep(2000);
-			List<WebElement> sortstate = driver.findElements(sort_lnk_state);
-			for(WebElement e:sortstate){
-				Thread.sleep(2000);
-				System.out.println(e.getText());
-			}
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-	}
 	public void YesNoo() throws InterruptedException
 	{
 		POM_PubDefender pu=new POM_PubDefender(driver);
@@ -944,7 +1022,7 @@ public class Facility   {
 					 case 1:
 						 Thread.sleep(1000);
 						 driver.findElement(btn_save).click();
-						 Thread.sleep(2000);
+						 Thread.sleep(3000);
 						 driver.findElement(By.id("btnOk")).click();
 						 break;
 					 case 2:
@@ -1144,7 +1222,7 @@ public class Facility   {
 		for (int x = 100; x <= 1000; ++x) {
 			randomInt5 = rd5.nextInt(1001);		
 		}
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		driver.findElement(txt_email).clear();
 		driver.findElement(txt_email).sendKeys(fac.get(2).get(1)+randomInt2+fac.get(2).get(2)); 
 		Thread.sleep(1000);

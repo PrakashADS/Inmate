@@ -95,8 +95,32 @@ public class Reporting {
 			Thread.sleep(1000);
 		//	sorting_form();
 			Thread.sleep(1500);
-			driver.findElement(btn_reset).click();
-			Log.info("Reset button clicked successfully");
+//	driver.findElement(btn_reset).click();
+   Log.info("Reset button clicked successfully");
+   
+   List<WebElement> rep=driver.findElements(By.className("listoneGrid"));
+   List<WebElement> rep1=driver.findElements(By.className("listoneGrid"));
+   for(WebElement e:rep)
+   {
+	   System.out.println(e.getText());
+	   System.out.println(rep.size());
+   }
+   for(WebElement e2:rep1)
+   {
+	   System.out.println(e2.getText());
+	   System.out.println(rep1.size());
+   }
+   int Total=rep.size()+rep1.size();
+  String NoOfRecords=driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_lblORequestTotalRecords']")).getText();
+  System.out.println(Total);  
+int Count = Integer.parseInt(NoOfRecords);
+if(Total==Count)
+    {
+	System.out.println("Sorting count is success");
+   }
+else{
+	System.out.println("Sorting count is wrong"); 
+    }
 			Thread.sleep(1000);
 			Sorting_Reporting();
 			
@@ -154,42 +178,42 @@ public class Reporting {
 		Log.info("Request Count sorted as Ascending");
 		Thread.sleep(3000);
 		driver.findElement(lnk_request_cnt).click();		
-		Log.info("Request Count sorted as Decending");
+		Log.info("Request Count sorted as Descending");
 		
 		Thread.sleep(3000);
 		driver.findElement(lnk_respond_time).click();
 		Log.info("Respond time sorted as Ascending");
 		Thread.sleep(3000);
 		driver.findElement(lnk_respond_time).click();		
-		Log.info("Respond time sorted as Decending");
+		Log.info("Respond time sorted as Descending");
 		
 		Thread.sleep(3000);
 		driver.findElement(lnk_Avg_respond).click();
 		Log.info("Average Respond time sorted as Ascending");
 		Thread.sleep(3000);
 		driver.findElement(lnk_Avg_respond).click();		
-		Log.info("Average Respond time sorted as Decending");
+		Log.info("Average Respond time sorted as Descending");
 		
 		Thread.sleep(3000);
 		driver.findElement(lnk_Req_cnt_percent).click();
 		Log.info("Avg Request Count sorted as Ascending");
 		Thread.sleep(3000);
 		driver.findElement(lnk_respond_time).click();		
-		Log.info("Avg Request Count sorted as Decending");
+		Log.info("Avg Request Count sorted as Descending");
 		
 		Thread.sleep(3000);
 		driver.findElement(lnk_respond_time_percent).click();
 		Log.info("Avg Respond sorted as Ascending");
 		Thread.sleep(3000);
 		driver.findElement(lnk_respond_time_percent).click();		
-		Log.info("Avg Respond Count sorted as Decending");
+		Log.info("Avg Respond Count sorted as Descending");
 		
 		Thread.sleep(3000);
 		driver.findElement(lnk_avg_respond_percent).click();
 		Log.info("Avg Respond Percent sorted as Ascending");
 		Thread.sleep(3000);
 		driver.findElement(lnk_avg_respond_percent).click();		
-		Log.info("Avg Respond Percent sorted as Decending");
+		Log.info("Avg Respond Percent sorted as Descending");
 		
 	}
 

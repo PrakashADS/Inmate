@@ -26,6 +26,15 @@ import org.testng.annotations.AfterMethod;
 
 
 
+
+
+
+
+
+
+
+
+
 import cucumber.api.DataTable;
 import AdminLogin_Inmate.Log;
 import PageObjectModel.POM_PubDefender;
@@ -48,10 +57,10 @@ public class Notice_Page {
 	By chk_kiosk = By.xpath("//*[@id='ContentPlaceHolder1_cblSubCompany']/tbody/tr[1]/td");
 	By btn_save = By.id("btnSubmit");
 	By btn_popup = By.id("btnOk");
-	By sort_title = By.xpath("//*[@id='grvNotices']/tbody/tr[1]/th[1]/a");
-	By sort_start_form = By.xpath("//*[@id='grvNotices']/tbody/tr[1]/th[2]/a");
-	By sort_end_by = By.xpath("//*[@id='grvNotices']/tbody/tr[1]/th[3]/a");
-	By sort_status = By.xpath("//*[@id='grvNotices']/tbody/tr[1]/th[4]/a");
+	By sort_title = By.xpath("//*[@id='ContentPlaceHolder1_rptNotices_lnkTitle']");
+	By sort_start_form = By.xpath("//*[@id='ContentPlaceHolder1_rptNotices_lnkStartFrom']");
+	By sort_end_by = By.xpath("//*[@id='ContentPlaceHolder1_rptNotices_lnkEndby']");
+	By sort_status = By.xpath("//*[@id='ContentPlaceHolder1_rptNotices_lnkStatus']");
 	By pagination = By.xpath("//*[@id='grvKeywords']/tbody/tr[11]/td/table/tbody/tr/td[2]/span");
 	By export_excel = By.id("ContentPlaceHolder1_imbtnExportToExcel");
 	By sorting_title = By.id("lnkNotices");
@@ -65,7 +74,6 @@ public class Notice_Page {
 		driver.findElement(menu_notice).click();
 		Select sel = new Select(driver.findElement(By.id("ddlFacilityCodes")));
 		sel.selectByValue("105");
-		
 		scroll();
 		Thread.sleep(2000);
 		driver.findElement(sort_title).click();
@@ -183,7 +191,7 @@ public class Notice_Page {
 		Log.info("Photo menu has been chosen");
 		Select sel = new Select(driver.findElement(By.id("ddlFacilityCodes")));
 		sel.selectByValue("105");
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		
 		driver.findElement(sort_title).click();
 		System.out.println("Before Sorting");
@@ -192,10 +200,11 @@ public class Notice_Page {
 		sort_title();
 		System.out.println("After Sorting");
 		System.out.println("*************");
+		Thread.sleep(1000);
 		driver.findElement(sort_title).click();
 		Thread.sleep(1000);
 		sort_title();
-
+		Thread.sleep(1000);
 		driver.findElement(sort_start_form).click();
 		System.out.println("Before Sorting");
 		System.out.println("*************");
@@ -203,68 +212,79 @@ public class Notice_Page {
 		sort_start_from();
 		System.out.println("After Sorting");
 		System.out.println("*************");
-		driver.findElement(sorting_start_from).click();
+		Thread.sleep(1500);
+		driver.findElement(sort_start_form).click();
 		Thread.sleep(1000);
 		sort_start_from();
-
-		driver.findElement(sorting_end_by).click();
+		Thread.sleep(1000);
+		driver.findElement(sort_end_by).click();
 		System.out.println("Before Sorting");
 		System.out.println("*************");
 		Thread.sleep(1000);
 		sort_End_By();
 		System.out.println("After Sorting");
 		System.out.println("*************");
-		driver.findElement(sorting_end_by).click();
+		Thread.sleep(1000);
+		driver.findElement(sort_end_by).click();
 		Thread.sleep(1000);
 		sort_End_By();
-
-		driver.findElement(By.xpath("//*[@id='grvNotices']/tbody/tr[1]/th[4]/a")).click();
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptNotices_lnkStatus']")).click();
 		System.out.println("Before Sorting");
 		System.out.println("*************");
 		Thread.sleep(1000);
-		sort_End_By();
+		SortByStatus();
 		System.out.println("After Sorting");
 		System.out.println("*************");
-		driver.findElement(By.xpath("//*[@id='grvNotices']/tbody/tr[1]/th[4]/a")).click();
 		Thread.sleep(1000);
-		sort_End_By();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptNotices_lnkStatus']")).click();
+		Thread.sleep(1000);
+		SortByStatus();
 				
 	}
 	
 	public void sort_title(){
-		List<WebElement> li = driver.findElements(sorting_title);
+		for(int i=0;i<10;i++)
+		{
+		List<WebElement> li = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptNotices_lnkNotices_"+i+"']"));
 		for (WebElement e : li) {
 			System.out.println(e.getText());
 		}
-	}
+	}}
 
 	public void sort_start_from(){
-		List<WebElement> li = driver.findElements(sorting_start_from);
+		for(int i=0;i<10;i++)
+		{
+		List<WebElement> li = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptNotices_lblStartDate_"+i+"']"));
 		for (WebElement e : li) {
 			System.out.println(e.getText());
 		}
-	}
+	}}
 
 	public void sort_End_By(){
-		List<WebElement> li = driver.findElements(sorting_end_by);
+		for(int i=0;i<10;i++)
+		{
+		List<WebElement> li = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptNotices_lblEndDate_"+i+"']"));
 		for (WebElement e : li) {
 			System.out.println(e.getText());
 		}
-	}
+	}}
 	public void SortByStatus()
 	{
-		List<WebElement> li = driver.findElements(By.xpath("imgStatus"));
-		for (WebElement e : li) {
-			System.out.println(e.getAttribute("title"));
-		}
+	for(int i=0;i<10;i++)
+	{
+	List<WebElement> li = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptNotices_imgStatus_"+i+"']"));
+	for (WebElement e : li) {
+		System.out.println(e.getAttribute("title"));
 	}
+}}
 public void Add_Notices(DataTable notices) throws InterruptedException
 {
 	List<List<String>> noti=notices.raw();
 	POM_PubDefender pu=new POM_PubDefender(driver);
 	Thread.sleep(2000);
 	ScrollUp250();
-	Thread.sleep(1500);
+	Thread.sleep(2000);
 	pu.Notices_1.click();
 	Thread.sleep(2000);
 	Select fsc=new Select(driver.findElement(By.xpath("//*[@id='ddlFacilityCodes']")));
@@ -305,11 +325,96 @@ public void Add_Notices(DataTable notices) throws InterruptedException
 	}
 	Thread.sleep(1000);
 	pu.SaveBtn.click();
-	Thread.sleep(1000);
+	Thread.sleep(2000);
 	pu.btnOk.click();
 	
 }
-	
+	public void edit_Notices(DataTable notices) throws InterruptedException
+	{
+		List<List<String>> noti=notices.raw();
+		POM_PubDefender pu=new POM_PubDefender(driver);		
+		Thread.sleep(2500);
+		Select kiosk=new Select(driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_ddlKioskSearch']")));
+		kiosk.selectByVisibleText(noti.get(4).get(1));
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_txtStartDateSearch']")).clear();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_txtStartDateSearch']")).sendKeys(noti.get(5).get(1));
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_txtEndDateSearch']")).clear();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_txtEndDateSearch']")).sendKeys(noti.get(6).get(1));
+		Thread.sleep(1000);
+		Select status=new Select(driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_ddlActiveStatusSearch']")));
+		status.selectByVisibleText(noti.get(7).get(1));
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='btnSearch']")).click();
+		Thread.sleep(2000);
+		List<WebElement> title=driver.findElements(By.className("trFirstRow"));
+		for(int i=0;i<1;i++)
+		{
+			 title=driver.findElements(By.className("trFirstRow"));
+			 title.get(i).click();
+		} 
+		Thread.sleep(2000);
+		ScrollUp250();
+		Thread.sleep(2000);
+		pu.Notices_1.click();
+		Thread.sleep(2000);
+		Select fsc=new Select(driver.findElement(By.xpath("//*[@id='ddlFacilityCodes']")));
+		fsc.selectByVisibleText("2411fac");
+		Thread.sleep(1000);
+		pu.AddNotices.click();
+		Thread.sleep(2000);
+		ScrollUp250();
+		Thread.sleep(1000);
+		pu.txtTitle.clear();
+	    pu.txtTitle.sendKeys(noti.get(0).get(1));
+		driver.findElement(By.id("ContentPlaceHolder1_Editor1_ctl03_ctl01")).click();
+		Thread.sleep(1000);
+		pu.Descriptions.clear();
+		pu.Descriptions.sendKeys(noti.get(1).get(1));
+		pu.StartDate.clear();
+		pu.StartDate.sendKeys(noti.get(2).get(1));
+		pu.EndDate.clear();
+		pu.EndDate.sendKeys(noti.get(3).get(1));
+		Thread.sleep(2000);
+	/*	List<WebElement> SelectKiosk=driver.findElements(By.xpath("//label[contains(text(),'A1')]"));
+		Thread.sleep(1000);
+		for(int i=0;i<1;i++)
+		{
+			Thread.sleep(1000);
+			SelectKiosk=driver.findElements(By.xpath("//label[contains(text(),'A1')]"));
+			Thread.sleep(1000);
+			SelectKiosk.get(i).click();
+		}*/
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_cblSubCompany_0']")).click();
+		Thread.sleep(1000);
+		List <WebElement> Status=driver.findElements(By.name("ctl00$ContentPlaceHolder1$rblNoticesStatus"));
+		if(Status.get(0).isSelected())
+		{
+			Status.get(0).click();
+		}
+		else
+		{
+			Status.get(1).click();
+		}
+		Thread.sleep(1000);
+		pu.SaveBtn.click();
+		Thread.sleep(2000);
+		pu.btnOk.click();
+	}
+	public void pagination() throws InterruptedException
+	{
+		for(int i=0;i<5;i++)
+		{
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnNext']")).click();
+		}
+		for(int i=0;i<5;i++)
+		{
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnPrevious']")).click();
+		}
+	}
 public void ScrollUp250()
 {
 	 JavascriptExecutor jse = (JavascriptExecutor)driver;

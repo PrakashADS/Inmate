@@ -21,7 +21,7 @@ Scenario:Inmate Public Defender Login
  | INMATE LASTNAME     | John         |               |
  | INMATE FRSTNAME     | PETER        |               |
  | POD                 | A            |               |
- | PUBLIC DEFENDER     | staff public | staff2 public |
+ | PUBLIC DEFENDER     | 262          | staff2 public |
  
  
  @CreateNewMsg

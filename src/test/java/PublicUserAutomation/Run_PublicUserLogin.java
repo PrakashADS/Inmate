@@ -9,18 +9,18 @@ import cucumber.api.junit.Cucumber;
 
 @CucumberOptions(
 
-features="C:\\Users\\prakashd\\Prakash_Automation\\Inmate\\src\\test\\java\\com\\inmate\\publicdefender\\publicuser.feature",
+features="D:\\Prakash_Automation\\Inmate\\src\\test\\java\\com\\inmate\\publicdefender\\PublicUser_August.feature",
     		 	      		
-			   plugin = {"pretty", "html:target/cucumber-html-report/ScreenshotPublicUserLogin","json:cucumber.json"},
+			   plugin = {"pretty", "html:target/cucumber-html-report/ScreenshotPublicUserLoginAugust","json:cucumber.json"},
 	   tags={
-	  	"~@SignupPublicUser",
-	//	   "~@LoginUsingRegUsers",
+	  	     "~@SignupPublicUser",
+	   //	 "~@LoginUsingRegUsers",
 			 "~@LoginPublicUser",
 	        "~@NewMsg",
             "~@NewPhoto",
 	         "~@Inbox",
 	        "~@FindInmate",
-	  //     "~@PurchaseCredit",
+	       "~@PurchaseCredit",
   
     
 

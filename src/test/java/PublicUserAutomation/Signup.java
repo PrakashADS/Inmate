@@ -2,6 +2,7 @@ package PublicUserAutomation;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
@@ -64,7 +65,7 @@ public class Signup {
 		List<List<String>> Login11=LoginSignup.raw();
 		POM_PubDefender pu=new POM_PubDefender(obj);
 		Thread.sleep(1000);
-		pu.btnlogin.click();
+		
 		pu.Username.sendKeys(Login11.get(0).get(1));
 		Thread.sleep(1000);
 		pu.btnlogin.click();
@@ -78,7 +79,7 @@ public class Signup {
 	{
 		List<List<String>> fi=findInmate.raw();
 		POM_PubDefender pu=new POM_PubDefender(obj);
-		Thread.sleep(2000);
+		Thread.sleep(6000);
 		pu.FindInmates.click();
 		Thread.sleep(1000);
 		Select states=new Select(pu.State);
@@ -88,6 +89,16 @@ public class Signup {
 		facCode.selectByVisibleText(fi.get(1).get(1));
 		Thread.sleep(1000);
 		pu.SaveBtn.click();
+		Thread.sleep(1000);
+		pu.UserFName.sendKeys(fi.get(2).get(1));
+		pu.UserLName.sendKeys(fi.get(3).get(1));
+		pu.InmatesId.sendKeys(fi.get(4).get(1));
+		Thread.sleep(1000);
+		((JavascriptExecutor)obj).executeScript ("document.getElementById('ContentPlaceHolder1_txtDob')"); 
+		obj.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		WebElement toDate= obj.findElement(By.id("ContentPlaceHolder1_txtDob"));
+		Thread.sleep(1000);
+		toDate.sendKeys(fi.get(5).get(1));
 		Thread.sleep(1000);
 		List<WebElement> AddContact=obj.findElements(By.className("odd"));
 		Thread.sleep(1000);

@@ -3,15 +3,20 @@ package AdminLogin_Inmate;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.sql.DatabaseMetaData;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -84,19 +89,14 @@ public class Inmate {
 			Thread.sleep(1000);
 			Logger logger=Logger.getLogger("Login_Page");
 			PropertyConfigurator.configure("log4j.properties");
-			Thread.sleep(1000);			
-			driver.findElement(lnk_inmate).click();
-			Select sel = new Select(driver.findElement(By.id("ddlFacilityCodes")));
-			sel.selectByValue("105");
-			Thread.sleep(1000);			
-			driver.findElement(txt_id).sendKeys("11");
-			logger.info("Id has been entered ");	
-			driver.findElement(btn_search).click();
-			logger.info("search has been clicked ");
-			Thread.sleep(1000);	
-			List<WebElement> elements = driver.findElements(lst_edit);
-			elements.get(0).click();
+			Thread.sleep(1500);	
+			for(int i=0;i<1;i++)
+			{
+			List<WebElement> ResId=driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptInmates_lnkInmateResidentId_"+i+"']"));
+			ResId.get(i).click();
 			logger.info("Edit has been chosen");
+			}
+			
 			Thread.sleep(2000);
 			driver.findElement(By.id("chkSelectDeselectAll")).click();
 			Thread.sleep(1500);
@@ -106,119 +106,182 @@ public class Inmate {
 			driver.findElement(By.id("ContentPlaceHolder1_txtInvestigatorEmail")).clear();
 			driver.findElement(By.id("ContentPlaceHolder1_txtInvestigatorEmail")).sendKeys(mr.get(4).get(1));
 			Thread.sleep(1000);
-			driver.findElement(By.xpath("//*[@id='grvInmatesInfo']/tbody/tr[1]/th[1]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lnkPublicUser']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nBefore Sorting:");
 			Puser_sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grvInmatesInfo']/tbody/tr[1]/th[1]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lnkPublicUser']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nAfter Sorting:");
 			Puser_sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grvInmatesInfo']/tbody/tr[1]/th[2]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lnkRelationship']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nBefore Sorting:");
 			Relationship_Sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grvInmatesInfo']/tbody/tr[1]/th[2]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lnkRelationship']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nAfter Sorting:");
 			Relationship_Sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grvInmatesInfo']/tbody/tr[1]/th[3]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lnkConnectionStatus']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nBefore Sorting:");
 			Conn_sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grvInmatesInfo']/tbody/tr[1]/th[3]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lnkConnectionStatus']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nAfter Sorting:");
 			Conn_sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grvInmatesInfo']/tbody/tr[1]/th[4]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lnkRequestSentOn']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nBefore Sorting:");
 			Req_Sent_Sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grvInmatesInfo']/tbody/tr[1]/th[4]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lnkRequestSentOn']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nAfter Sorting:");
 			Req_Sent_Sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grvInmatesInfo']/tbody/tr[1]/th[5]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lnkCreditBalance']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nBefore Sorting:");
 			Credit_Bal__sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grvInmatesInfo']/tbody/tr[1]/th[5]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lnkCreditBalance']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nAfter Sorting:");
 			Credit_Bal__sort();
 			Thread.sleep(2500);
 			driver.findElement(By.id("ContentPlaceHolder1_imgbtnConnectionsInfoExporttoExcel")).click();
 			Thread.sleep(1000);
-			scroll1();
-		/*	Thread.sleep(1000);
-			driver.findElement(By.xpath("//*[@id='grdvwInmateLoginInfo']/tbody/tr[1]/th[1]/a")).click();
+			scroll500();
+			/*	String Pagi1=driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_lbltxtInmatesInfoSelectedPageOutOfPage']")).getText();
+			int pagiValue=Integer.parseInt(Pagi1);
+			Thread.sleep(2000);
+			for(int i=0;i<pagiValue-1;i++)
+			{
+				Thread.sleep(2000);
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnInmatesInfoSelectedPageNext']")).click();
+			}                                
+			Thread.sleep(1000);
+			for(int i=0;i<pagiValue-1;i++)
+			{
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnInmatesInfoSelectedPagePrev']")).click();
+			}*/
+			                                                  
+			Boolean paginations=driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_lbltxtInmatesInfoSelectedPageOutOfPage']")).isDisplayed();
+			if(paginations=true)
+			{
+			String pageSize=driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_lbltxtInmatesInfoSelectedPageOutOfPage']")).getText();
+			int pgeSize=Integer.parseInt(pageSize);
+			scroll250();
+			for(int i=0;i<pgeSize-1;i++)
+			{
+				Thread.sleep(2000);           
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnInmatesInfoSelectedPageNext']")).click();
+			}
+			Thread.sleep(1000);  
+			scroll_250();
+			Thread.sleep(1000);  
+			for(int i=0;i<pgeSize-1;i++)
+			{
+				Thread.sleep(1500);          
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnInmatesInfoSelectedPagePrev']")).click();
+			}
+		}
+			Thread.sleep(1000);
+			scroll150();
+			Thread.sleep(1000);
+			driver.findElement(By.id("ContentPlaceHolder1_rptInmateLoginInfo_lnkDate")).click();
 			Thread.sleep(1000);
 			System.out.println("\nBefore Sorting:");
 			Date__sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grdvwInmateLoginInfo']/tbody/tr[1]/th[1]/a")).click();
+			driver.findElement(By.id("ContentPlaceHolder1_rptInmateLoginInfo_lnkDate")).click();
 			Thread.sleep(1000);
 			System.out.println("\nAfter Sorting:");
 			Date__sort();
 			Thread.sleep(1000);
-			driver.findElement(By.xpath("//*[@id='grdvwInmateLoginInfo']/tbody/tr[1]/th[2]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmateLoginInfo_lnkInmateId']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nBefore Sorting:");
 			InmateId__sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grdvwInmateLoginInfo']/tbody/tr[1]/th[2]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmateLoginInfo_lnkInmateId']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nAfter Sorting:");
 			InmateId__sort();
 			Thread.sleep(1000);
-			driver.findElement(By.xpath("//*[@id='grdvwInmateLoginInfo']/tbody/tr[1]/th[3]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmateLoginInfo_lnkPodName']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nBefore Sorting:");
 			pod__sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grdvwInmateLoginInfo']/tbody/tr[1]/th[3]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmateLoginInfo_lnkPodName']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nAfter Sorting:");
 			pod__sort();
 			Thread.sleep(1000);
-			driver.findElement(By.xpath("//*[@id='grdvwInmateLoginInfo']/tbody/tr[1]/th[4]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmateLoginInfo_lnkKiosksCode']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nBefore Sorting:");
 			kiosk__sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grdvwInmateLoginInfo']/tbody/tr[1]/th[4]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmateLoginInfo_lnkKiosksCode']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nAfter Sorting:");
 			kiosk__sort();
 			Thread.sleep(1000);
-			driver.findElement(By.xpath("//*[@id='grdvwInmateLoginInfo']/tbody/tr[1]/th[5]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmateLoginInfo_lnkLoginStatus']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nBefore Sorting:");
 			loginStatus__sort();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id='grdvwInmateLoginInfo']/tbody/tr[1]/th[5]/a")).click();
+			driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmateLoginInfo_lnkLoginStatus']")).click();
 			Thread.sleep(1000);
 			System.out.println("\nAfter Sorting:");
 			loginStatus__sort();
 			Thread.sleep(1500);
-			driver.findElement(By.id("ContentPlaceHolder1_imgbtnInmateLoginInfoExportToExcel")).click();*/
+			driver.findElement(By.id("ContentPlaceHolder1_imgbtnInmateLoginInfoExportToExcel")).click();
 			Thread.sleep(1500);
-					
-				for(int i=2;i<=5;i++)
-				{
-					Thread.sleep(1000);
-					
-					driver.findElement(By.xpath("//*[@id='grdvwInmateLoginInfo']/tbody/tr[12]/td/table/tbody/tr/td["+i+"]/a")).click();	
-				}
+			scroll150();
+			
+		/*	for(int i=0;i<5;i++)
+			{
+				Thread.sleep(1000);
+				driver.findElement(By.id("ContentPlaceHolder1_imgbtnInmatesLoginInfoSelectedPageNext")).click();
+			}
+			Thread.sleep(1000);
+			for(int i=0;i<5;i++)
+			{
+				Thread.sleep(1000);
+				driver.findElement(By.id("ContentPlaceHolder1_imgbtnInmatesLoginInfoSelectedPagePrev")).click();
+			}*/                                               
+			Boolean paginations1=driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_lblInmatesLoginInfoSelectedPageOutOf']")).isDisplayed();
+			if(paginations1=true)
+			{
+			String pageSize1=driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_lblInmatesLoginInfoSelectedPageOutOf']")).getText();
+			int pgeSize1=Integer.parseInt(pageSize1);
+			scroll250();
+			for(int i=0;i<pgeSize1-90;i++)
+			{
+				Thread.sleep(2500);        
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnInmatesLoginInfoSelectedPageNext']")).click();
+			}
+			
+			for(int i=0;i<pgeSize1-90;i++)
+			{
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnInmatesLoginInfoSelectedPagePrev']")).click();
+			}
+			
+			}
+				Thread.sleep(3000);
 				 int z=1;
 				switch(z)
 				{
@@ -231,12 +294,11 @@ public class Inmate {
 				case 2:
 					Thread.sleep(1000);
 					driver.findElement(By.id("ContentPlaceHolder1_btnCancel")).click();
-					break;
-					
+					break;				
 				}
-				Thread.sleep(3000);		
+			/*	Thread.sleep(3000);		
 				driver.findElement(By.xpath("//*[@id='lnkInmateResidentId']")).click();
-				Thread.sleep(1500);
+				Thread.sleep(1500);*/
 				
 				Thread.sleep(1000);
 				/*messages_Inmate();
@@ -311,104 +373,119 @@ public class Inmate {
 			*/
 		} 
 	
-	public void Puser_sort()
+	public void Puser_sort() throws InterruptedException
 	{
-		List<WebElement> pname=driver.findElements(By.id("lbtnPublicUserName"));
-		for(WebElement e:pname)
-		{
-			
-			System.out.println(e.getText());
-		}
-	}
-	public void Relationship_Sort()
-	{
-	List<WebElement> rel=driver.findElements(By.id("lblRelationShip"));
-	for(WebElement e:rel)
-	{
-		
-		System.out.println(e.getText());
-	}
+		Thread.sleep(1000);
+	    for(int i=0;i<10;i++)
+	    {
+	 	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lbtnPublicUserName_"+i+"']")); 
+			for (WebElement e : li) {
+				System.out.println(e.getText());
+			}}
 	}
 	
-	public void Conn_sort()
+	public void Relationship_Sort() throws InterruptedException
 	{
-		List<WebElement> conn=driver.findElements(By.id("lblConnectionStatus"));
-		for(WebElement e:conn)
-		{
-			
-			System.out.println(e.getText());
-		}
-	}
-	public void Req_Sent_Sort()
-	{
-	List<WebElement> req=driver.findElements(By.id("lblRequestSentDate"));
-	for(WebElement e:req)
-	{
-		
-		System.out.println(e.getText());
-	}
+		Thread.sleep(1000);
+	    for(int i=0;i<10;i++)
+	    {
+	 	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lblRelationShip_"+i+"']")); 
+			for (WebElement e : li) {
+				System.out.println(e.getText());
+			}}
 	}
 	
-	public void Credit_Bal__sort()
+	public void Conn_sort() throws InterruptedException
 	{
-		List<WebElement> credit=driver.findElements(By.id("lblCreditBalance"));
-		for(WebElement e:credit)
-		{
-			
-			System.out.println(e.getText());
-		}
+		Thread.sleep(1000);
+	    for(int i=0;i<10;i++)
+	    {
+	 	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lblConnectionStatus_"+i+"']")); 
+			for (WebElement e : li) {
+				System.out.println(e.getText());
+			}}
 	}
-	public void Date__sort()
+	public void Req_Sent_Sort() throws InterruptedException
 	{
-		List<WebElement> credit=driver.findElements(By.id("lblCreditBalance"));
-		for(WebElement e:credit)
-		{
-			
-			System.out.println(e.getText());
-		}
+		Thread.sleep(1000);
+	    for(int i=0;i<10;i++)
+	    {
+	 	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lblRequestSentDate_"+i+"']")); 
+			for (WebElement e : li) {
+				System.out.println(e.getText());
+			}}
 	}
-	public void InmateId__sort()
+
+	public void Credit_Bal__sort() throws InterruptedException
 	{
-		List<WebElement> credit=driver.findElements(By.id("lblCreditBalance"));
-		for(WebElement e:credit)
-		{
-			
-			System.out.println(e.getText());
-		}
-	}
-	public void pod__sort()
-	{
-		List<WebElement> credit=driver.findElements(By.id("lblCreditBalance"));
-		for(WebElement e:credit)
-		{
-			
-			System.out.println(e.getText());
-		}
-	}
-	public void kiosk__sort()
-	{
-		List<WebElement> credit=driver.findElements(By.id("lblCreditBalance"));
-		for(WebElement e:credit)
-		{
-			
-			System.out.println(e.getText());
-		}
-	}
-	public void loginStatus__sort()
-	{
-		List<WebElement> credit=driver.findElements(By.id("lblCreditBalance"));
-		for(WebElement e:credit)
-		{
-			
-			System.out.println(e.getText());
-		}
+		Thread.sleep(1000);
+	    for(int i=0;i<10;i++)
+	    {
+	 	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptInmatesInfo_lblCreditBalance_"+i+"']")); 
+			for (WebElement e : li) {
+				System.out.println(e.getText());
+			}}
 	}
 	
+	public void Date__sort() throws InterruptedException
+
+	{
+		Thread.sleep(1000);
+	    for(int i=0;i<10;i++)
+	    {
+	 	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptInmateLoginInfo_lblLoginInfoDate_"+i+"']")); 
+			for (WebElement e : li) {
+				System.out.println(e.getText());
+		}}
+	}
+	public void InmateId__sort() throws InterruptedException
+	{
+		Thread.sleep(1000);
+	    for(int i=0;i<10;i++)
+	    {
+	 	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptInmateLoginInfo_lblLoginInfoInmateResidentId_"+i+"']")); 
+			for (WebElement e : li) {
+				System.out.println(e.getText());
+		}}
+	}
+	public void pod__sort() throws InterruptedException
+	{
+		Thread.sleep(1000);
+	    for(int i=0;i<10;i++)
+	    {
+	 	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptInmateLoginInfo_lblLoginInfoPodName_"+i+"']")); 
+			for (WebElement e : li) {
+				System.out.println(e.getText());
+		}}
+	}
+	public void kiosk__sort() throws InterruptedException
+	{
+		Thread.sleep(1000);
+	    for(int i=0;i<10;i++)
+	    {
+	 	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptInmateLoginInfo_lblLoginInfoKiosksCode_"+i+"']")); 
+			for (WebElement e : li) {
+				System.out.println(e.getText());
+		}}
+	}
+	public void loginStatus__sort() throws InterruptedException
+	{
+		Thread.sleep(1000);
+	    for(int i=0;i<10;i++)
+	    {
+	 	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptInmateLoginInfo_lblLoginInfoLoginStatus_"+i+"']")); 
+			for (WebElement e : li) {
+				System.out.println(e.getText());
+		}}
+	}
 	
 	public void Edit_Info(){
 		try {
+			Thread.sleep(1000);
 			driver.findElement(txt_investigator_mail).clear();
 			driver.findElement(txt_investigator_mail).sendKeys("mangaipriya@themajesticpeople.com");
+			
+			Thread.sleep(1000);
 			driver.findElement(btn_update).click();
 			Thread.sleep(2000);
 			driver.findElement(btn_ok).click();
@@ -435,10 +512,28 @@ public class Inmate {
 			 jse.executeScript("window.scrollBy(0,250)", "");
 
 	}
+	private void scroll_250() {
+		
+		 JavascriptExecutor jse = (JavascriptExecutor)driver;
+		 jse.executeScript("window.scrollBy(0,-250)", "");
+
+}
 	private void scroll1() {
 		
 		 JavascriptExecutor jse = (JavascriptExecutor)driver;
 		 jse.executeScript("window.scrollBy(0,900)", "");
+
+}
+	private void scroll500() {
+		
+		 JavascriptExecutor jse = (JavascriptExecutor)driver;
+		 jse.executeScript("window.scrollBy(0,500)", "");
+
+}
+	private void scroll150() {
+		
+		 JavascriptExecutor jse = (JavascriptExecutor)driver;
+		 jse.executeScript("window.scrollBy(0,150)", "");
 
 }
 	/* code for explicit wait*/
@@ -476,7 +571,7 @@ public class Inmate {
 		Thread.sleep(2000);
 		driver.findElement(Reports).click();
 		Thread.sleep(2000);
-		driver.findElement(ExportAll).click();
+	//	driver.findElement(ExportAll).click();
 		Thread.sleep(1800);
 		driver.findElement(Messages_reports).click();
 		Thread.sleep(3000);
@@ -503,7 +598,7 @@ public class Inmate {
 			
 		}
 		Thread.sleep(2000);
-	//	Request_reports(msgReport);
+		Request_reports(msgReport);
 		InitialteMsg_reports(msgReport);
 	}
 	public void Request_reports(DataTable msgReport) throws InterruptedException
@@ -559,7 +654,7 @@ public class Inmate {
 		switch(z)
 		{
 		case 1:
-			Thread.sleep(1000);
+			Thread.sleep(2500);
 			driver.findElement(DownloadInit).click();
 			break;
 		case 2:
@@ -573,10 +668,14 @@ public class Inmate {
 	
 	public void messages_Inmate() throws InterruptedException, AWTException
 	{
-		POM_PubDefender pu=new POM_PubDefender(driver);
 		Thread.sleep(1000);
+		Logger logger=Logger.getLogger("Login_Page");
+		PropertyConfigurator.configure("log4j.properties");
+		Thread.sleep(1500);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptInmates_lnkInmateResidentId_0']")).click();
+		POM_PubDefender pu=new POM_PubDefender(driver);
+		Thread.sleep(3000);
 		pu.Messages.click();
-		Thread.sleep(2000);
 		Thread.sleep(2000);
 		pu.LastNameInmate.click();
 		Thread.sleep(1000);
@@ -608,16 +707,24 @@ public class Inmate {
 		}
 		*/
 		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptMessages_lblSubject_0']")).click();
-		Thread.sleep(1500);       
+		Thread.sleep(2000);       
 		pu.BtnTranslate.click();
 		Thread.sleep(1500);
 		//obj.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		pu.BackButton.click();
+		Thread.sleep(1000);
+		Message_Sorting();
 	}
 	public void photos_Inmate() throws InterruptedException
 	{
 		POM_PubDefender pu=new POM_PubDefender(driver);
 		Thread.sleep(2500);
+		for(int i=0;i<1;i++)
+		{
+		List<WebElement> ResId=driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptInmates_lnkInmateResidentId_"+i+"']"));
+		ResId.get(i).click();
+		}
+		Thread.sleep(1500);
 		pu.Photos.click();
 		Thread.sleep(1000);
 		/*pu.LastNamePhotos.click();
@@ -634,24 +741,263 @@ public class Inmate {
 		Robot r3=new Robot();
 		r3.keyPress(KeyEvent.VK_TAB);
 		Thread.sleep(1000);*/
+	
 		pu.btnSearchPhotos.click();
-		
 		Thread.sleep(1000);
-		List<WebElement> photos=driver.findElements(By.id("lblPhotoSubject"));
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnPhotosExporttoExcel']")).click();
+		Thread.sleep(1500);
+		List<WebElement> photos=driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lblPhotoSubject_0']"));
 		Thread.sleep(1000);
 		for(int i=0;i<1;i++)
 		{
 			Thread.sleep(1000);
-			photos=driver.findElements(By.id("lblPhotoSubject"));
+			photos=driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lblPhotoSubject_"+i+"']"));
 			Thread.sleep(1000);
 			scroll250();
 			Thread.sleep(1000);
 			photos.get(i).click();
-			Thread.sleep(1000);
+			
+			int x=2;
+			switch(x)
+			{
+			case 1:
+				Thread.sleep(1000);
+				if(driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_btnApprove']")).isDisplayed())
+				{
+			   Thread.sleep(500);
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_btnApprove']")).click();
+				YesNo();
+				}
+				else{
+					System.out.println("No Approve Button Appeared");
+				}
+				break;
+			case 2:
+				Thread.sleep(1000);
+				if(driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_btnReject']")).isDisplayed())
+				{
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_btnReject']")).click();
+				YesNo();
+				}
+				else{
+					System.out.println("No Reject Button Appeared");
+				}
+				break;
+			}
+			Thread.sleep(1500);
 			pu.Back1.click();
 		}
-		
+		Photos_Sorting();
 	}
+	public void YesNo() throws InterruptedException
+	{
+		int y=2;
+		switch(y)
+		{
+		case 1:
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='btnYes']")).click();
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='btnOk']")).click();
+			break;
+		case 2:
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@id='btnNo']")).click();
+			break;
+		}
+	}
+	public void Photos_Sorting() throws InterruptedException
+	{
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkSubject']")).click();
+		System.out.println("Ascending Order Subject:");
+		Subj_Sorting();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkSubject']")).click();
+		System.out.println("Descending Order Subject:");
+		Subj_Sorting();
+		
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkFrom']")).click();
+		System.out.println("Ascending Order From:");
+		From_Sorting();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkFrom']")).click();
+		System.out.println("Descending Order From:");
+		From_Sorting();
+		
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkTo']")).click();
+		System.out.println("Ascending Order To:");
+		To_Sorting();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkTo']")).click();
+		System.out.println("Descending Order To:");
+		To_Sorting();
+		
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkSentOn']")).click();
+		System.out.println("Ascending Order SentOn:");
+		SentOn_Sorting();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkSentOn']")).click();
+		System.out.println("Descending Order SentOn:");
+		SentOn_Sorting();
+		
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkStatus']")).click();
+		System.out.println("Ascending Order Status:");
+		Status_Sorting();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lnkStatus']")).click();
+		System.out.println("Descending Order Status:");
+		Status_Sorting();
+	}
+	public void Status_Sorting() throws InterruptedException
+	{
+		{
+			{
+				Thread.sleep(1000);
+				for(int i=0;i<10;i++)
+				{                                                           
+					List<WebElement> ToSort=driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_imgStatus_"+i+"']"));
+					for(WebElement e:ToSort)
+					{
+					  System.out.println(e.getAttribute("title"));
+					}
+				}
+			}
+		}
+	}
+	public void SentOn_Sorting() throws InterruptedException
+	{
+		{
+			{
+				Thread.sleep(1000);
+				for(int i=0;i<10;i++)
+				{                                                           
+					List<WebElement> ToSort=driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lblPhotoSentDate_"+i+"']"));
+					for(WebElement e:ToSort)
+					{
+					  System.out.println(e.getText());
+					}
+				}
+			}
+		}
+	}
+	public void To_Sorting() throws InterruptedException
+	{
+		{
+			{
+				Thread.sleep(1000);
+				for(int i=0;i<10;i++)
+				{                                                           
+					List<WebElement> ToSort=driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lblPhotoTo_"+i+"']"));
+					for(WebElement e:ToSort)
+					{
+					  System.out.println(e.getText());
+					}
+				}
+			}
+		}
+	}
+	public void From_Sorting() throws InterruptedException
+	{
+		{
+			Thread.sleep(1000);
+			for(int i=0;i<10;i++)
+			{                                                            
+				List<WebElement> fromSort=driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lblPhotoFrom_"+i+"']"));
+				for(WebElement e:fromSort)
+				{
+				  System.out.println(e.getText());
+				}
+			}
+		}
+	}
+	public void Subj_Sorting() throws InterruptedException
+	{
+		{
+			Thread.sleep(1000);
+			for(int i=0;i<10;i++)
+			{                                                           
+				List<WebElement> SubjSort=driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptPhotosInfo_lblPhotoSubject_"+i+"']"));
+				for(WebElement e:SubjSort)
+				{
+				  System.out.println(e.getText());
+				}
+			}
+		}
+	}
+	public void Message_Sorting() throws InterruptedException
+	{
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptMessages_lnkSubject']")).click();
+		System.out.println("Before Sorting Subject:");
+		Sort_Subject();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptMessages_lnkSubject']")).click();
+		System.out.println("After Sorting Subject:");
+		Sort_Subject();
+		
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptMessages_lnkFrom']")).click();
+		System.out.println("Before Sorting From:");
+		Sort_From();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptMessages_lnkFrom']")).click();
+		System.out.println("After Sorting From:");
+		Sort_From();
+		
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptMessages_lnkTo']")).click();
+		System.out.println("Before Sorting To:");
+		Sort_To();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptMessages_lnkTo']")).click();
+		System.out.println("After Sorting To:");
+		Sort_To();
+	}
+	public void Sort_Subject() throws InterruptedException
+	{
+		Thread.sleep(1000);
+		for(int i=0;i<10;i++)
+		{                                                           
+			List<WebElement> SubjSort=driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptMessages_lblSubject_"+i+"']"));
+			for(WebElement e:SubjSort)
+			{
+				System.out.println(e.getText());
+			}
+		}
+	}
+	public void Sort_From() throws InterruptedException
+	{
+		Thread.sleep(1000);
+		for(int i=0;i<10;i++)
+		{                                                                
+			List<WebElement> FromSort=driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptMessages_lblSender_"+i+"']"));
+			for(WebElement e:FromSort)
+			{
+			System.out.println(e.getText());
+			}
+		}
+	}	
+	public void Sort_To() throws InterruptedException
+	{
+		Thread.sleep(1000);
+		for(int i=0;i<10;i++)
+		{                                                           
+			List<WebElement> ToSort=driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptMessages_lblTo_"+i+"']"));
+			for(WebElement e:ToSort)
+			{
+			System.out.println(e.getText());
+			}
+		}
+	}	
+	public void Sort_Flag() throws InterruptedException
+	{
+		Thread.sleep(1000);
+		for(int i=0;i<10;i++)
+		{                                                           
+			List<WebElement> FlagSort=driver.findElements(By.xpath("src"));
+			for(WebElement e:FlagSort)
+			{
+			System.out.println(e.getText());
+			}
+		}
+	}	
 	 public void ScrollUp150()
 	 {
 		 JavascriptExecutor jse = (JavascriptExecutor)driver;
@@ -659,84 +1005,92 @@ public class Inmate {
 	 }
 	 public void free_credit() throws InterruptedException
 	 {
-		 Thread.sleep(1500);
+		Thread.sleep(1500);
 		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_achrFreeCreditsInfo']")).click();
 		Thread.sleep(1500);
 	    driver.findElement(By.id("ContentPlaceHolder1_imgbtnFreeCreditsExportExcel")).click();
-	    Thread.sleep(1000);
-		Thread.sleep(1000);
-		driver.findElement(By.xpath("//*[@id='grdViewFreeCredits']/tbody/tr[1]/th[1]/a")).click();
+	    Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptFreeCredits_lnkDate']")).click();
 		Thread.sleep(1000);
 		System.out.println("\nBefore Sorting:");
 		Date_sort();
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("//*[@id='grdViewFreeCredits']/tbody/tr[1]/th[1]/a")).click();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptFreeCredits_lnkDate']")).click();
 		Thread.sleep(1000);
 		System.out.println("\nAfter Sorting:");
 		Date_sort();
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("//*[@id='grdViewFreeCredits']/tbody/tr[1]/th[2]/a")).click();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptFreeCredits_lnkCredit']")).click();
 		Thread.sleep(1000);
 		System.out.println("\nBefore Sorting:");
 		Credit_sort();
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("//*[@id='grdViewFreeCredits']/tbody/tr[1]/th[2]/a")).click();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptFreeCredits_lnkCredit']")).click();
 		Thread.sleep(1000);
 		System.out.println("\nAfter Sorting:");
 		Credit_sort();
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("//*[@id='grdViewFreeCredits']/tbody/tr[1]/th[3]/a")).click();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptFreeCredits_lnkDebit']")).click();
 		Thread.sleep(1000);
 		System.out.println("\nBefore Sorting:");
 		Debit_sort();
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("//*[@id='grdViewFreeCredits']/tbody/tr[1]/th[3]/a")).click();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptFreeCredits_lnkDebit']")).click();
 		Thread.sleep(1000);
 		System.out.println("\nAfter Sorting:");
 		Debit_sort();
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("//*[@id='grdViewFreeCredits']/tbody/tr[1]/th[4]/a")).click();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptFreeCredits_lnkBalance']")).click();
 		Thread.sleep(1000);
 		System.out.println("\nBefore Sorting:");
 		Balance_sort();
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("//*[@id='grdViewFreeCredits']/tbody/tr[1]/th[4]/a")).click();
+		driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_rptFreeCredits_lnkBalance']")).click();
 		Thread.sleep(1000);
 		System.out.println("\nAfter Sorting:");
 		Balance_sort();
 	 }
-	 public void Date_sort()
-		{
-			List<WebElement> date=driver.findElements(By.id("lblFreeCreditsDate"));
-			for(WebElement e:date)
-			{
-				System.out.println(e.getText());
-			}	
-		}
-	 public void Credit_sort()
-		{
-			List<WebElement> credit=driver.findElements(By.id("lblCreditAmount"));
-			for(WebElement e:credit)
-			{
-				System.out.println(e.getText());
-			}	
-		}
-	 public void Debit_sort()
-		{
-			List<WebElement> debit=driver.findElements(By.id("lblDebitAmount"));
-			for(WebElement e:debit)
-			{
-				System.out.println(e.getText());
-			}	
-		}
-		public void Balance_sort()
-		{
-			List<WebElement> bal=driver.findElements(By.id("lblFreeCredits"));
-			for(WebElement e:bal)
-			{
-				System.out.println(e.getText());
-			}	
-		}
+	 
+	 public void Date_sort() throws InterruptedException
+	 {
+	 	Thread.sleep(1000);
+	     for(int i=0;i<10;i++)
+	     {
+	  	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptFreeCredits_lblFreeCreditsDate_"+i+"']")); 
+	 		for (WebElement e : li) {
+	 			System.out.println(e.getText());
+	 		}}
+	 }
+	 public void Credit_sort() throws InterruptedException
+	 {
+		 	Thread.sleep(1000);
+		     for(int i=0;i<10;i++)
+		     {
+		  	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptFreeCredits_lblCreditAmount_"+i+"']")); 
+		 		for (WebElement e : li) {
+		 			System.out.println(e.getText());
+		 		}}
+		 }
+	 public void Debit_sort() throws InterruptedException
+	 {
+		 	Thread.sleep(1000);
+		     for(int i=0;i<10;i++)
+		     {
+		  	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptFreeCredits_lblDebitAmount_"+i+"']")); 
+		 		for (WebElement e : li) {
+		 			System.out.println(e.getText());
+		 		}}
+		 }
+		public void Balance_sort() throws InterruptedException
+		 {
+		 	Thread.sleep(1000);
+		     for(int i=0;i<10;i++)
+		     {
+		  	   List<WebElement> li  = driver.findElements(By.xpath("//*[@id='ContentPlaceHolder1_rptFreeCredits_lblFreeCredits_"+i+"']")); 
+		 		for (WebElement e : li) {
+		 			System.out.println(e.getText());
+		 		}}
+		 }
 		
 		public void ConnectionReq() throws InterruptedException
 		{
@@ -746,18 +1100,15 @@ public class Inmate {
 			Thread.sleep(1000);
 			ScrollUp400();
 			Thread.sleep(1000);
-			for(int i=2;i<=3;i++)
+			for(int i=0;i<3;i++)
 			{
 				Thread.sleep(1000);
 				ScrollUp400();
 				Thread.sleep(1000);
-				driver.findElement(By.xpath("//*[@id='grdvwInviteRequests']/tbody/tr[12]/td/table/tbody/tr/td["+i+"]/a")).click();	
+				driver.findElement(By.xpath("//*[@id='ContentPlaceHolder1_imgbtnNextIn']")).click();	
 			} 
 			Thread.sleep(1000);
 			ScrollDown350();
-		
-			
-			
 		}
 		 public void ScrollUp400()
 		 {
@@ -769,6 +1120,7 @@ public class Inmate {
 			 JavascriptExecutor jse = (JavascriptExecutor)driver;
 			 jse.executeScript("window.scrollBy(0,-350)", "");
 		 }
+		 
 	 }
 
 	

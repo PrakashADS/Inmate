@@ -6,8 +6,8 @@ Scenario:public User Signup
   When Signup using values
   | FIRST NAME     | Mathew                 |
   | LAST NAME      | Hayden                 |
-  | EMAIL          | 1mathay@gmails.com      |
-  | CONFIRM EMAIL  | 1mathay@gmails.com      |
+  | EMAIL          | 1mathay@gmails.com     |
+  | CONFIRM EMAIL  | 1mathay@gmails.com     |
   | USERNAME       | MatHayden              |
   | PASSWORD       | MatHay@123             |
   | RE PASSWORD    | MatHay@123             |
@@ -24,21 +24,21 @@ Scenario:public User Signup
   Scenario:Login using registered values
   Given Enter the Inmate public user URL
   Then Login using registered values
-   | USERNAME       | 1MatHayden            |
-   | PASSWORD       | MatHay@123            |
+   | USERNAME       | mangai            |
+   | PASSWORD       | mangai123         |
  
  @LoginPublicUser
  Scenario:Signin public user
  Given Enter the Inmate public user URL
  Then Enter userName and passWord to LogIn
-  | USERNAME  | prabhu	   |
-  | PASSWORD  | prabhu123  | 
+  | USERNAME  | mangai	   |
+  | PASSWORD  | mangai123  | 
   
   @FindInmate
 Scenario:Find the inmate
 And Find the Inmate
 | STATE        | Alaska   |
-|FACILITY CODE | fac2411  |
+|FACILITY CODE | 1912fac  |
 |RELATIONSHIP  | Son      |
 
 @PurchaseCredit
@@ -62,7 +62,7 @@ Then Create the Message and send
 @Inbox
 Scenario:Goto Inbox and Reply
 Then Goto Inbox,Search message and Reply
-| SEARCH NAME  | Arn          |
+| SEARCH NAME  | John          |
 | MESSAGE      | Test message |
 
 @Archived
@@ -88,8 +88,30 @@ Then Find the inmate
 @SortMyContacts
 Scenario:Sorting My Contacts
 Then Sorting My Contacts
-| SEARCH CONTACT  | 13                       |
+| SEARCH CONTACT  | John                       |
 | INMATE NAME     | Jenkins PAUL A - fac2411 |
 | TRANSFER AMOUNT | 0.01                     |
+
+@SentPhotos
+Scenario:Goto SentPhotos 
+Then Goto SentPhotos
+| SEARCH NAME     | John     |
+
+@CODpending
+Scenario:Goto COD Pending
+Then Goto COD Pending
+
+@ArchivedMsg
+Scenario:Goto Archived
+Then Goto Archived page
+| SEARCH NAME   | pete            |
+| REPLY MESSAGE | where are you?  |
+
+
+
+
+
+
+
 
 

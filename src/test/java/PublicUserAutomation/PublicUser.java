@@ -29,15 +29,14 @@ public class PublicUser {
 private static WebDriver obj;
 public static Logger log=Logger.getLogger(PublicUser.class.getName());
 
-public PublicUser()
+/*public PublicUser()
 {
 	this.obj=obj;
 }
 public WebDriver getDriver()
 {
 	return this.obj;
-}
-
+}*/
 
 @When("^Signup using values$")
 public void Signup_user(DataTable signup) throws InterruptedException
@@ -71,28 +70,22 @@ public void LoginSignup(DataTable Logins) throws InterruptedException
 	obj.findElement(By.id("lnkLogin")).click();
 	List<List<String>> Login2=Logins.raw();
 	POM_PubDefender pu=new POM_PubDefender(obj);
-	Thread.sleep(1000);
-	pu.btnlogin.click();
+	Thread.sleep(1000);	
 	pu.Username.sendKeys(Login2.get(0).get(1));
-	Thread.sleep(1000);
-	pu.btnlogin.click();
-	Thread.sleep(1000);
 	pu.Passwd.sendKeys(Login2.get(1).get(1));
 	Thread.sleep(1000);
 	pu.btnlogin.click();
 	log.info("LoggedIn Success");
 }
 @Then("^Enter userName and passWord to LogIn$")
-public void Login(DataTable Login) throws InterruptedException
+public void Loginss(DataTable Login) throws InterruptedException
 {
 	List<List<String>> Login1=Login.raw();
 	POM_PubDefender pu=new POM_PubDefender(obj);
-	Thread.sleep(1000);
-	pu.btnlogin.click();
-	Thread.sleep(1000);
-	pu.Username.sendKeys(Login1.get(0).get(1));
-	Thread.sleep(1000);
-	pu.btnlogin.click();
+	Thread.sleep(2000);
+	/*pu.Username.sendKeys(Login1.get(0).get(1));
+	Thread.sleep(1000);*/
+	obj.findElement(By.xpath("//*[@id='txtLoginpassword']")).sendKeys("mangai");
 	Thread.sleep(1000);
 	pu.Passwd.sendKeys(Login1.get(1).get(1));
 	Thread.sleep(1000);
@@ -191,7 +184,7 @@ public void Inbox() throws InterruptedException
 @BeforeMethod
 @Given("^Enter the Inmate public user URL$")
 public void beforeMethod() {
-	  PropertyConfigurator.configure("C:\\Users\\prakashd\\Prakash_Automation\\Inmate\\log4j.properties");
+	  PropertyConfigurator.configure("D:\\Prakash_Automation\\Inmate\\log4j.properties");
 
 	   System.setProperty("webdriver.chrome.driver", "D:\\PRAKASH DOCS\\PRAKASH_Softwares\\chromedriver_win32\\chromedriver.exe");  
 		  obj=new ChromeDriver();

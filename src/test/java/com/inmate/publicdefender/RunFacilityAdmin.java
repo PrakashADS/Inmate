@@ -7,7 +7,7 @@ import cucumber.api.junit.Cucumber;
 
 @CucumberOptions(
 
-features="C:\\Users\\prakashd\\New_Workspace_Automation\\Inmate\\src\\test\\java\\com\\inmate\\publicdefender\\facilityAdmin.feature",
+features="D:\\Prakash_Automation\\Inmate\\src\\test\\java\\com\\inmate\\publicdefender\\facilityAdmin.feature",
     		 	      		
 			   plugin = {"pretty", "html:target/cucumber-html-report/ScreenshotFacilityAdmin","json:cucumber.json"},
 	   tags={
@@ -20,10 +20,8 @@ features="C:\\Users\\prakashd\\New_Workspace_Automation\\Inmate\\src\\test\\java
     	"~@CreateNewMsg1",
 	   "~@SendMsg1",	
 		
-    
        "~@f1",				
         
-      
       "~@Documents" , 
       "~@EditDocuments",
      "~@DeleteDocuments",
